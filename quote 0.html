@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Quotes Gallery</title>
+  <style>
+    body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  margin: 0;
+  background: #f4f4f9;
+  color: #222;
+}
+.container {
+  max-width: 500px;
+  margin: auto;
+  padding: 24px;
+}
+header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.quote-day {
+  font-size: 1.1em;
+  font-style: italic;
+  background: #fafad2;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+aside {
+  margin-bottom: 10px;
+  text-align: center;
+}
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.quote-card {
+  background: #fff;
+  padding: 28px 18px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+  min-height: 120px;
+  display: flex;
+  align-items: center;
+  font-size: 1.15em;
+  text-align: center;
+  margin-bottom: 14px;
+  max-width: 380px;
+}
+.controls button {
+  margin: 0 8px;
+  padding: 8px 16px;
+  border: none;
+  background: #348ceb;
+  color: #fff;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: background 0.2s;
+}
+.controls button:hover {
+  background: #2461a7;
+}
+@media (max-width:600px) {
+  .container { padding: 10px; }
+}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Quote Gallery</h1>
+      <div id="quoteOfDay" class="quote-day"></div>
+    </header>
+    <aside>
+      <select id="categorySelect"></select>
+    </aside>
+    <main>
+      <div id="quoteCard" class="quote-card"></div>
+      <div class="controls">
+        <button id="prevBtn">Previous</button>
+        <button id="nextBtn">Next</button>
+      </div>
+    </main>
+  </div>
+  <script>
+    // Paste your categorized quotes here
+const quotes = {
+  motivation: [
+    "Obsession beats talent, Discipline beats obsession",
+    "Your dream does not require hype, it requires hunger",
+    // ... more
+  ],
+  love: [
+    "I once loved a flower so much that instead of picking it, I left it alone",
+    "My heart is so full of you I can hardly call it my own.",
+    // ... more
+  ],
+  // Add more categories here...
+};
+
+// Extract categories for select input
+const categories = Object.keys(quotes);
+const categorySelect = document.getElementById('categorySelect');
+categories.forEach(c => {
+  const opt = document.createElement('option');
+  opt.value = c;
+  opt.textContent = c.charAt(0).toUpperCase() + c.slice(1);
+  categorySelect.appendChild(opt);
+});
+
+// Setting up quote display
+let currentCategory = categories[0];
+let currentIdx = 0;
+const quoteCard = document.getElementById('quoteCard');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+
+// Display quote
+function showQuote() {
+  quoteCard.textContent = quotes[currentCategory][currentIdx] || "No quote found.";
+}
+
+// Navigation
+prevBtn.onclick = () => {
+  currentIdx = (currentIdx === 0) ? quotes[currentCategory].length - 1 : currentIdx - 1;
+  showQuote();
+};
+nextBtn.onclick = () => {
+  currentIdx = (currentIdx + 1) % quotes[currentCategory].length;
+  showQuote();
+};
+
+// Category change
+categorySelect.onchange = () => {
+  currentCategory = categorySelect.value;
+  currentIdx = 0;
+  showQuote();
+};
+
+// Quote of the Day
+function pickQuoteOfDay() {
+  // Simple deterministic: different quote per day
+  const catKeys = Object.keys(quotes);
+  const quotesList = catKeys.flatMap(cat => quotes[cat]);
+  if (quotesList.length === 0) return "";
+  const today = new Date().getDate();
+  return quotesList[today % quotesList.length];
+}
+document.getElementById('quoteOfDay').textContent = "Quote of the day: " + pickQuoteOfDay();
+
+// Initialize default view
+categorySelect.value = currentCategory;
+showQuote();
+
+  </script>
+</body>
+</html>
