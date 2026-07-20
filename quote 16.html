@@ -1,0 +1,1929 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quotes Gallery</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            /* Primitive Color Tokens */
+            --color-white: rgba(255, 255, 255, 1);
+            --color-black: rgba(0, 0, 0, 1);
+            --color-cream-50: rgba(252, 252, 249, 1);
+            --color-cream-100: rgba(255, 255, 253, 1);
+            --color-gray-200: rgba(245, 245, 245, 1);
+            --color-gray-300: rgba(167, 169, 169, 1);
+            --color-gray-400: rgba(119, 124, 124, 1);
+            --color-slate-500: rgba(98, 108, 113, 1);
+            --color-brown-600: rgba(94, 82, 64, 1);
+            --color-charcoal-700: rgba(31, 33, 33, 1);
+            --color-charcoal-800: rgba(38, 40, 40, 1);
+            --color-slate-900: rgba(19, 52, 59, 1);
+            --color-teal-300: rgba(50, 184, 198, 1);
+            --color-teal-400: rgba(45, 166, 178, 1);
+            --color-teal-500: rgba(33, 128, 141, 1);
+            --color-teal-600: rgba(29, 116, 128, 1);
+            --color-teal-700: rgba(26, 104, 115, 1);
+            --color-teal-800: rgba(41, 150, 161, 1);
+            --color-red-400: rgba(255, 84, 89, 1);
+            --color-red-500: rgba(192, 21, 47, 1);
+            --color-orange-400: rgba(230, 129, 97, 1);
+            --color-orange-500: rgba(168, 75, 47, 1);
+
+            /* RGB versions for opacity control */
+            --color-brown-600-rgb: 94, 82, 64;
+            --color-teal-500-rgb: 33, 128, 141;
+            --color-slate-900-rgb: 19, 52, 59;
+            --color-slate-500-rgb: 98, 108, 113;
+            --color-red-500-rgb: 192, 21, 47;
+            --color-red-400-rgb: 255, 84, 89;
+            --color-orange-500-rgb: 168, 75, 47;
+            --color-orange-400-rgb: 230, 129, 97;
+
+            /* Enhanced Background color tokens (Light Mode) */
+            --color-bg-1: rgba(59, 130, 246, 0.12);
+            --color-bg-2: rgba(245, 158, 11, 0.12);
+            --color-bg-3: rgba(34, 197, 94, 0.12);
+            --color-bg-4: rgba(239, 68, 68, 0.12);
+            --color-bg-5: rgba(147, 51, 234, 0.12);
+            --color-bg-6: rgba(249, 115, 22, 0.12);
+            --color-bg-7: rgba(236, 72, 153, 0.12);
+            --color-bg-8: rgba(6, 182, 212, 0.12);
+            --color-bg-9: rgba(139, 69, 19, 0.12);
+            --color-bg-10: rgba(101, 163, 13, 0.12);
+            --color-bg-11: rgba(124, 58, 237, 0.12);
+            --color-bg-12: rgba(20, 184, 166, 0.12);
+            --color-bg-13: rgba(99, 102, 241, 0.12);
+            --color-bg-14: rgba(16, 185, 129, 0.12);
+
+            /* Semantic Color Tokens (Light Mode) */
+            --color-background: var(--color-cream-50);
+            --color-surface: var(--color-cream-100);
+            --color-text: var(--color-slate-900);
+            --color-text-secondary: var(--color-slate-500);
+            --color-primary: var(--color-teal-500);
+            --color-primary-hover: var(--color-teal-600);
+            --color-primary-active: var(--color-teal-700);
+            --color-secondary: rgba(var(--color-brown-600-rgb), 0.12);
+            --color-secondary-hover: rgba(var(--color-brown-600-rgb), 0.2);
+            --color-secondary-active: rgba(var(--color-brown-600-rgb), 0.25);
+            --color-border: rgba(var(--color-brown-600-rgb), 0.2);
+            --color-btn-primary-text: var(--color-cream-50);
+            --color-card-border: rgba(var(--color-brown-600-rgb), 0.12);
+            --color-card-border-inner: rgba(var(--color-brown-600-rgb), 0.12);
+            --color-error: var(--color-red-500);
+            --color-success: var(--color-teal-500);
+            --color-warning: var(--color-orange-500);
+            --color-info: var(--color-slate-500);
+            --color-focus-ring: rgba(var(--color-teal-500-rgb), 0.4);
+            --color-select-caret: rgba(var(--color-slate-900-rgb), 0.8);
+
+            /* Common style patterns */
+            --focus-ring: 0 0 0 3px var(--color-focus-ring);
+            --focus-outline: 2px solid var(--color-primary);
+            --status-bg-opacity: 0.15;
+            --status-border-opacity: 0.25;
+            --select-caret-light: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23134252' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            --select-caret-dark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23f5f5f5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+
+            /* RGB versions for opacity control */
+            --color-success-rgb: 33, 128, 141;
+            --color-error-rgb: 192, 21, 47;
+            --color-warning-rgb: 168, 75, 47;
+            --color-info-rgb: 98, 108, 113;
+
+            /* Typography */
+            --font-family-base: "FKGroteskNeue", "Geist", "Inter", -apple-system,
+                BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-family-mono: "Berkeley Mono", ui-monospace, SFMono-Regular, Menlo,
+                Monaco, Consolas, monospace;
+            --font-size-xs: 11px;
+            --font-size-sm: 12px;
+            --font-size-base: 14px;
+            --font-size-md: 14px;
+            --font-size-lg: 16px;
+            --font-size-xl: 18px;
+            --font-size-2xl: 20px;
+            --font-size-3xl: 24px;
+            --font-size-4xl: 30px;
+            --font-weight-normal: 400;
+            --font-weight-medium: 500;
+            --font-weight-semibold: 550;
+            --font-weight-bold: 600;
+            --line-height-tight: 1.2;
+            --line-height-normal: 1.5;
+            --letter-spacing-tight: -0.01em;
+
+            /* Spacing */
+            --space-0: 0;
+            --space-1: 1px;
+            --space-2: 2px;
+            --space-4: 4px;
+            --space-6: 6px;
+            --space-8: 8px;
+            --space-10: 10px;
+            --space-12: 12px;
+            --space-16: 16px;
+            --space-20: 20px;
+            --space-24: 24px;
+            --space-32: 32px;
+
+            /* Border Radius */
+            --radius-sm: 6px;
+            --radius-base: 8px;
+            --radius-md: 10px;
+            --radius-lg: 12px;
+            --radius-full: 9999px;
+
+            /* Shadows */
+            --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.02);
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.04),
+                0 2px 4px -1px rgba(0, 0, 0, 0.02);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.04),
+                0 4px 6px -2px rgba(0, 0, 0, 0.02);
+            --shadow-inset-sm: inset 0 1px 0 rgba(255, 255, 255, 0.15),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.03);
+
+            /* Animation */
+            --duration-fast: 150ms;
+            --duration-normal: 250ms;
+            --ease-standard: cubic-bezier(0.16, 1, 0.3, 1);
+
+            /* Layout */
+            --container-sm: 640px;
+            --container-md: 768px;
+            --container-lg: 1024px;
+            --container-xl: 1280px;
+        }
+
+        /* Dark mode colors */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                /* RGB versions for opacity control (Dark Mode) */
+                --color-gray-400-rgb: 119, 124, 124;
+                --color-teal-300-rgb: 50, 184, 198;
+                --color-gray-300-rgb: 167, 169, 169;
+                --color-gray-200-rgb: 245, 245, 245;
+
+                /* Enhanced Background color tokens (Dark Mode) */
+                --color-bg-1: rgba(29, 78, 216, 0.2);
+                --color-bg-2: rgba(180, 83, 9, 0.2);
+                --color-bg-3: rgba(21, 128, 61, 0.2);
+                --color-bg-4: rgba(185, 28, 28, 0.2);
+                --color-bg-5: rgba(107, 33, 168, 0.2);
+                --color-bg-6: rgba(194, 65, 12, 0.2);
+                --color-bg-7: rgba(190, 24, 93, 0.2);
+                --color-bg-8: rgba(8, 145, 178, 0.2);
+                --color-bg-9: rgba(120, 53, 15, 0.2);
+                --color-bg-10: rgba(63, 98, 18, 0.2);
+                --color-bg-11: rgba(91, 33, 182, 0.2);
+                --color-bg-12: rgba(13, 148, 136, 0.2);
+                --color-bg-13: rgba(67, 56, 202, 0.2);
+                --color-bg-14: rgba(6, 95, 70, 0.2);
+
+                /* Semantic Color Tokens (Dark Mode) */
+                --color-background: var(--color-charcoal-700);
+                --color-surface: var(--color-charcoal-800);
+                --color-text: var(--color-gray-200);
+                --color-text-secondary: rgba(var(--color-gray-300-rgb), 0.7);
+                --color-primary: var(--color-teal-300);
+                --color-primary-hover: var(--color-teal-400);
+                --color-primary-active: var(--color-teal-800);
+                --color-secondary: rgba(var(--color-gray-400-rgb), 0.15);
+                --color-secondary-hover: rgba(var(--color-gray-400-rgb), 0.25);
+                --color-secondary-active: rgba(var(--color-gray-400-rgb), 0.3);
+                --color-border: rgba(var(--color-gray-400-rgb), 0.3);
+                --color-error: var(--color-red-400);
+                --color-success: var(--color-teal-300);
+                --color-warning: var(--color-orange-400);
+                --color-info: var(--color-gray-300);
+                --color-focus-ring: rgba(var(--color-teal-300-rgb), 0.4);
+                --color-btn-primary-text: var(--color-slate-900);
+                --color-card-border: rgba(var(--color-gray-400-rgb), 0.2);
+                --color-card-border-inner: rgba(var(--color-gray-400-rgb), 0.15);
+                --shadow-inset-sm: inset 0 1px 0 rgba(255, 255, 255, 0.1),
+                    inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+                --button-border-secondary: rgba(var(--color-gray-400-rgb), 0.2);
+                --color-border-secondary: rgba(var(--color-gray-400-rgb), 0.2);
+                --color-select-caret: rgba(var(--color-gray-200-rgb), 0.8);
+
+                /* Common style patterns - updated for dark mode */
+                --focus-ring: 0 0 0 3px var(--color-focus-ring);
+                --focus-outline: 2px solid var(--color-primary);
+                --status-bg-opacity: 0.15;
+                --status-border-opacity: 0.25;
+                --select-caret-light: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23134252' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+                --select-caret-dark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23f5f5f5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+
+                /* RGB versions for dark mode */
+                --color-success-rgb: var(--color-teal-300-rgb);
+                --color-error-rgb: var(--color-red-400-rgb);
+                --color-warning-rgb: var(--color-orange-400-rgb);
+                --color-info-rgb: var(--color-gray-300-rgb);
+            }
+        }
+
+        /* Data attribute for manual theme switching */
+        [data-color-scheme="dark"] {
+            /* RGB versions for opacity control (dark mode) */
+            --color-gray-400-rgb: 119, 124, 124;
+            --color-teal-300-rgb: 50, 184, 198;
+            --color-gray-300-rgb: 167, 169, 169;
+            --color-gray-200-rgb: 245, 245, 245;
+
+            /* Enhanced Background color tokens - Dark Mode */
+            --color-bg-1: rgba(29, 78, 216, 0.2);
+            --color-bg-2: rgba(180, 83, 9, 0.2);
+            --color-bg-3: rgba(21, 128, 61, 0.2);
+            --color-bg-4: rgba(185, 28, 28, 0.2);
+            --color-bg-5: rgba(107, 33, 168, 0.2);
+            --color-bg-6: rgba(194, 65, 12, 0.2);
+            --color-bg-7: rgba(190, 24, 93, 0.2);
+            --color-bg-8: rgba(8, 145, 178, 0.2);
+            --color-bg-9: rgba(120, 53, 15, 0.2);
+            --color-bg-10: rgba(63, 98, 18, 0.2);
+            --color-bg-11: rgba(91, 33, 182, 0.2);
+            --color-bg-12: rgba(13, 148, 136, 0.2);
+            --color-bg-13: rgba(67, 56, 202, 0.2);
+            --color-bg-14: rgba(6, 95, 70, 0.2);
+
+            /* Semantic Color Tokens (Dark Mode) */
+            --color-background: var(--color-charcoal-700);
+            --color-surface: var(--color-charcoal-800);
+            --color-text: var(--color-gray-200);
+            --color-text-secondary: rgba(var(--color-gray-300-rgb), 0.7);
+            --color-primary: var(--color-teal-300);
+            --color-primary-hover: var(--color-teal-400);
+            --color-primary-active: var(--color-teal-800);
+            --color-secondary: rgba(var(--color-gray-400-rgb), 0.15);
+            --color-secondary-hover: rgba(var(--color-gray-400-rgb), 0.25);
+            --color-secondary-active: rgba(var(--color-gray-400-rgb), 0.3);
+            --color-border: rgba(var(--color-gray-400-rgb), 0.3);
+            --color-error: var(--color-red-400);
+            --color-success: var(--color-teal-300);
+            --color-warning: var(--color-orange-400);
+            --color-info: var(--color-gray-300);
+            --color-focus-ring: rgba(var(--color-teal-300-rgb), 0.4);
+            --color-btn-primary-text: var(--color-slate-900);
+            --color-card-border: rgba(var(--color-gray-400-rgb), 0.15);
+            --color-card-border-inner: rgba(var(--color-gray-400-rgb), 0.15);
+            --shadow-inset-sm: inset 0 1px 0 rgba(255, 255, 255, 0.1),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+            --color-border-secondary: rgba(var(--color-gray-400-rgb), 0.2);
+            --color-select-caret: rgba(var(--color-gray-200-rgb), 0.8);
+
+            /* Common style patterns - updated for dark mode */
+            --focus-ring: 0 0 0 3px var(--color-focus-ring);
+            --focus-outline: 2px solid var(--color-primary);
+            --status-bg-opacity: 0.15;
+            --status-border-opacity: 0.25;
+            --select-caret-light: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23134252' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            --select-caret-dark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23f5f5f5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+
+            /* RGB versions for dark mode */
+            --color-success-rgb: var(--color-teal-300-rgb);
+            --color-error-rgb: var(--color-red-400-rgb);
+            --color-warning-rgb: var(--color-orange-400-rgb);
+            --color-info-rgb: var(--color-gray-300-rgb);
+        }
+
+        [data-color-scheme="light"] {
+            /* RGB versions for opacity control (light mode) */
+            --color-brown-600-rgb: 94, 82, 64;
+            --color-teal-500-rgb: 33, 128, 141;
+            --color-slate-900-rgb: 19, 52, 59;
+
+            /* Semantic Color Tokens (Light Mode) */
+            --color-background: var(--color-cream-50);
+            --color-surface: var(--color-cream-100);
+            --color-text: var(--color-slate-900);
+            --color-text-secondary: var(--color-slate-500);
+            --color-primary: var(--color-teal-500);
+            --color-primary-hover: var(--color-teal-600);
+            --color-primary-active: var(--color-teal-700);
+            --color-secondary: rgba(var(--color-brown-600-rgb), 0.12);
+            --color-secondary-hover: rgba(var(--color-brown-600-rgb), 0.2);
+            --color-secondary-active: rgba(var(--color-brown-600-rgb), 0.25);
+            --color-border: rgba(var(--color-brown-600-rgb), 0.2);
+            --color-btn-primary-text: var(--color-cream-50);
+            --color-card-border: rgba(var(--color-brown-600-rgb), 0.12);
+            --color-card-border-inner: rgba(var(--color-brown-600-rgb), 0.12);
+            --color-error: var(--color-red-500);
+            --color-success: var(--color-teal-500);
+            --color-warning: var(--color-orange-500);
+            --color-info: var(--color-slate-500);
+            --color-focus-ring: rgba(var(--color-teal-500-rgb), 0.4);
+
+            /* RGB versions for light mode */
+            --color-success-rgb: var(--color-teal-500-rgb);
+            --color-error-rgb: var(--color-red-500-rgb);
+            --color-warning-rgb: var(--color-orange-500-rgb);
+            --color-info-rgb: var(--color-slate-500-rgb);
+        }
+
+        /* Base styles */
+        html {
+            font-size: var(--font-size-base);
+            font-family: var(--font-family-base);
+            line-height: var(--line-height-normal);
+            color: var(--color-text);
+            background-color: var(--color-background);
+            -webkit-font-smoothing: antialiased;
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            transition: background-color var(--duration-normal) var(--ease-standard);
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: inherit;
+        }
+
+        /* Typography */
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            margin: 0;
+            font-weight: var(--font-weight-semibold);
+            line-height: var(--line-height-tight);
+            color: var(--color-text);
+            letter-spacing: var(--letter-spacing-tight);
+        }
+
+        h1 {
+            font-size: var(--font-size-4xl);
+        }
+        h2 {
+            font-size: var(--font-size-3xl);
+        }
+        h3 {
+            font-size: var(--font-size-2xl);
+        }
+        h4 {
+            font-size: var(--font-size-xl);
+        }
+        h5 {
+            font-size: var(--font-size-lg);
+        }
+        h6 {
+            font-size: var(--font-size-md);
+        }
+
+        p {
+            margin: 0 0 var(--space-16) 0;
+        }
+
+        a {
+            color: var(--color-primary);
+            text-decoration: none;
+            transition: color var(--duration-fast) var(--ease-standard);
+        }
+
+        a:hover {
+            color: var(--color-primary-hover);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--space-8) var(--space-16);
+            border-radius: var(--radius-base);
+            font-size: var(--font-size-base);
+            font-weight: 500;
+            line-height: 1.5;
+            cursor: pointer;
+            transition: all var(--duration-normal) var(--ease-standard);
+            border: none;
+            text-decoration: none;
+            position: relative;
+        }
+
+        .btn:focus-visible {
+            outline: none;
+            box-shadow: var(--focus-ring);
+        }
+
+        .btn--primary {
+            background: var(--color-primary);
+            color: var(--color-btn-primary-text);
+        }
+
+        .btn--primary:hover {
+            background: var(--color-primary-hover);
+        }
+
+        .btn--primary:active {
+            background: var(--color-primary-active);
+        }
+
+        .btn--secondary {
+            background: var(--color-secondary);
+            color: var(--color-text);
+        }
+
+        .btn--secondary:hover {
+            background: var(--color-secondary-hover);
+        }
+
+        .btn--secondary:active {
+            background: var(--color-secondary-active);
+        }
+
+        .btn--outline {
+            background: transparent;
+            border: 1px solid var(--color-border);
+            color: var(--color-text);
+        }
+
+        .btn--outline:hover {
+            background: var(--color-secondary);
+        }
+
+        .btn--sm {
+            padding: var(--space-4) var(--space-12);
+            font-size: var(--font-size-sm);
+            border-radius: var(--radius-sm);
+        }
+
+        .btn--lg {
+            padding: var(--space-10) var(--space-20);
+            font-size: var(--font-size-lg);
+            border-radius: var(--radius-md);
+        }
+
+        .btn--full-width {
+            width: 100%;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Form elements */
+        .form-control {
+            display: block;
+            width: 100%;
+            padding: var(--space-8) var(--space-12);
+            font-size: var(--font-size-md);
+            line-height: 1.5;
+            color: var(--color-text);
+            background-color: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-base);
+            transition: border-color var(--duration-fast) var(--ease-standard),
+                box-shadow var(--duration-fast) var(--ease-standard);
+        }
+
+        textarea.form-control {
+            font-family: var(--font-family-base);
+            font-size: var(--font-size-base);
+        }
+
+        select.form-control {
+            padding: var(--space-8) var(--space-12);
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: var(--select-caret-light);
+            background-repeat: no-repeat;
+            background-position: right var(--space-12) center;
+            background-size: 16px;
+            padding-right: var(--space-32);
+        }
+
+        /* Add a dark mode specific caret */
+        @media (prefers-color-scheme: dark) {
+            select.form-control {
+                background-image: var(--select-caret-dark);
+            }
+        }
+
+        /* Also handle data-color-scheme */
+        [data-color-scheme="dark"] select.form-control {
+            background-image: var(--select-caret-dark);
+        }
+
+        [data-color-scheme="light"] select.form-control {
+            background-image: var(--select-caret-light);
+        }
+
+        .form-control:focus {
+            border-color: var(--color-primary);
+            outline: var(--focus-outline);
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: var(--space-8);
+            font-weight: var(--font-weight-medium);
+            font-size: var(--font-size-sm);
+        }
+
+        .form-group {
+            margin-bottom: var(--space-16);
+        }
+
+        /* Card component */
+        .card {
+            background-color: var(--color-surface);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--color-card-border);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+            transition: box-shadow var(--duration-normal) var(--ease-standard);
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-md);
+        }
+
+        .card__body {
+            padding: var(--space-16);
+        }
+
+        .card__header,
+        .card__footer {
+            padding: var(--space-16);
+            border-bottom: 1px solid var(--color-card-border-inner);
+        }
+
+        /* Container layout */
+        .container {
+            width: 100%;
+            margin-right: auto;
+            margin-left: auto;
+            padding-right: var(--space-16);
+            padding-left: var(--space-16);
+        }
+
+        @media (min-width: 640px) {
+            .container {
+                max-width: var(--container-sm);
+            }
+        }
+        @media (min-width: 768px) {
+            .container {
+                max-width: var(--container-md);
+            }
+        }
+        @media (min-width: 1024px) {
+            .container {
+                max-width: var(--container-lg);
+            }
+        }
+        @media (min-width: 1280px) {
+            .container {
+                max-width: var(--container-xl);
+            }
+        }
+
+        /* Utility classes */
+        .flex {
+            display: flex;
+        }
+        .flex-col {
+            flex-direction: column;
+        }
+        .items-center {
+            align-items: center;
+        }
+        .justify-center {
+            justify-content: center;
+        }
+        .justify-between {
+            justify-content: space-between;
+        }
+        .gap-4 {
+            gap: var(--space-4);
+        }
+        .gap-8 {
+            gap: var(--space-8);
+        }
+        .gap-16 {
+            gap: var(--space-16);
+        }
+
+        .m-0 {
+            margin: 0;
+        }
+        .mt-8 {
+            margin-top: var(--space-8);
+        }
+        .mb-8 {
+            margin-bottom: var(--space-8);
+        }
+        .mx-8 {
+            margin-left: var(--space-8);
+            margin-right: var(--space-8);
+        }
+        .my-8 {
+            margin-top: var(--space-8);
+            margin-bottom: var(--space-8);
+        }
+
+        .p-0 {
+            padding: 0;
+        }
+        .py-8 {
+            padding-top: var(--space-8);
+            padding-bottom: var(--space-8);
+        }
+        .px-8 {
+            padding-left: var(--space-8);
+            padding-right: var(--space-8);
+        }
+        .py-16 {
+            padding-top: var(--space-16);
+            padding-bottom: var(--space-16);
+        }
+        .px-16 {
+            padding-left: var(--space-16);
+            padding-right: var(--space-16);
+        }
+
+        .block {
+            display: block;
+        }
+        .hidden {
+            display: none;
+        }
+
+        /* Accessibility */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        :focus-visible {
+            outline: var(--focus-outline);
+            outline-offset: 2px;
+        }
+
+        /* Dark mode specifics */
+        [data-color-scheme="dark"] .btn--outline {
+            border: 1px solid var(--color-border-secondary);
+        }
+
+        @font-face {
+            font-family: 'FKGroteskNeue';
+            src: url('https://r2cdn.perplexity.ai/fonts/FKGroteskNeue.woff2')
+                format('woff2');
+        }
+
+        /* END PERPLEXITY DESIGN SYSTEM */
+
+        /* NEW STYLES FOR IMPROVED QUOTES GALLERY */
+
+        /* Header */
+        .header {
+            background: var(--color-surface);
+            border-bottom: 1px solid var(--color-card-border);
+            padding: var(--space-16) 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: all var(--duration-normal) var(--ease-standard);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 var(--space-16);
+        }
+
+        .logo {
+            font-size: var(--font-size-2xl);
+            font-weight: var(--font-weight-bold);
+            color: var(--color-primary);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: var(--space-16);
+        }
+
+        /* IMPROVED SEARCH BAR */
+        .search-bar {
+            position: relative;
+            width: 320px;
+        }
+
+        .search-input {
+    width: 100%;
+    padding: var(--space-12) var(--space-64) var(--space-12) var(--space-16); /* Increased right padding */
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+    background: var(--color-surface);
+    font-size: var(--font-size-base);
+    transition: all var(--duration-normal) var(--ease-standard);
+    box-shadow: var(--shadow-sm);
+    color: var(--color-text); /* Ensure text color */
+}
+
+        .search-input:focus {
+    border-color: var(--color-primary);
+    box-shadow: var(--focus-ring);
+    background: var(--color-background);
+}
+        .search-input::placeholder {
+    color: var(--color-text-secondary); /* Placeholder color */
+}
+
+        .search-icon {
+    position: absolute;
+    right: var(--space-16);
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-text-secondary);
+    z-index: 2;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none; /* Make it non-interactive */
+}
+
+        .search-clear {
+    position: absolute;
+    right: var(--space-40); /* Moved left to avoid overlap */
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    padding: var(--space-4);
+    border-radius: var(--radius-full);
+    display: none;
+    transition: all var(--duration-fast) var(--ease-standard);
+    z-index: 3; /* Ensure it's above the search icon */
+}
+
+        .search-clear:hover {
+    color: var(--color-error);
+    background: rgba(var(--color-error-rgb), 0.1);
+}
+
+.search-input:not(:placeholder-shown) + .search-clear {
+    display: flex;
+}
+        /* Theme Toggle */
+        .theme-toggle {
+            background: var(--color-secondary);
+            border: 1px solid var(--color-border);
+            color: var(--color-text);
+            width: 44px;
+            height: 44px;
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all var(--duration-normal) var(--ease-standard);
+        }
+
+        .theme-toggle:hover {
+            background: var(--color-secondary-hover);
+            transform: scale(1.05);
+        }
+
+        .theme-toggle:active {
+            transform: scale(0.95);
+        }
+
+        .theme-toggle .fa-sun {
+            display: none;
+        }
+
+        [data-color-scheme="dark"] .theme-toggle .fa-moon {
+            display: none;
+        }
+
+        [data-color-scheme="dark"] .theme-toggle .fa-sun {
+            display: block;
+        }
+
+        /* Quote of the Day Banner */
+        .quote-of-day-banner {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-teal-700) 100%);
+            color: var(--color-white);
+            padding: var(--space-32) var(--space-16);
+            text-align: center;
+            margin-bottom: var(--space-32);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quote-of-day-banner::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .banner-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .banner-content h2 {
+            font-size: var(--font-size-2xl);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-white);
+            margin-bottom: var(--space-16);
+            letter-spacing: var(--letter-spacing-tight);
+        }
+
+        .daily-quote-text {
+            font-size: var(--font-size-xl);
+            color: var(--color-white);
+            font-style: italic;
+            line-height: 1.6;
+            margin-bottom: var(--space-16);
+        }
+
+        .daily-quote-category {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            color: var(--color-white);
+            padding: var(--space-4) var(--space-12);
+            border-radius: var(--radius-full);
+            font-size: var(--font-size-sm);
+            font-weight: var(--font-weight-medium);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Main Layout */
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 var(--space-16) var(--space-32);
+            display: flex;
+            gap: var(--space-32);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            flex-shrink: 0;
+            background: var(--color-surface);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--color-card-border);
+            padding: var(--space-24);
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+            transition: all var(--duration-normal) var(--ease-standard);
+        }
+
+        .sidebar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-16);
+        }
+
+        .sidebar h3 {
+            font-size: var(--font-size-xl);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-text);
+        }
+
+        .category-nav {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-8);
+            max-height: 500px;
+            overflow-y: auto;
+            padding-right: var(--space-8);
+        }
+
+        .category-nav::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .category-nav::-webkit-scrollbar-track {
+            background: var(--color-secondary);
+            border-radius: var(--radius-full);
+        }
+
+        .category-nav::-webkit-scrollbar-thumb {
+            background: var(--color-primary);
+            border-radius: var(--radius-full);
+        }
+
+        .category-btn {
+            background: var(--color-surface);
+            border: 1px solid var(--color-card-border);
+            color: var(--color-text);
+            padding: var(--space-12) var(--space-16);
+            border-radius: var(--radius-base);
+            font-size: var(--font-size-base);
+            font-weight: var(--font-weight-medium);
+            cursor: pointer;
+            transition: all var(--duration-fast) var(--ease-standard);
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: var(--space-8);
+        }
+
+        .category-btn:hover {
+            background: var(--color-secondary-hover);
+            border-color: var(--color-primary);
+            transform: translateX(4px);
+        }
+
+        .category-btn.active {
+            background: var(--color-primary);
+            color: var(--color-btn-primary-text);
+            border-color: var(--color-primary);
+        }
+
+        .category-btn:focus-visible {
+            outline: var(--focus-outline);
+            outline-offset: 2px;
+        }
+
+        .category-icon {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-24);
+        }
+
+        .content-header h2 {
+            font-size: var(--font-size-3xl);
+            font-weight: var(--font-weight-bold);
+            color: var(--color-text);
+        }
+
+        .quotes-counter {
+            font-size: var(--font-size-base);
+            color: var(--color-text-secondary);
+        }
+
+        /* Quotes Grid */
+        .quotes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: var(--space-24);
+            margin-bottom: var(--space-32);
+        }
+
+        .quote-card {
+            background: var(--color-surface);
+            border: 1px solid var(--color-card-border);
+            border-radius: var(--radius-lg);
+            padding: var(--space-24);
+            box-shadow: var(--shadow-sm);
+            transition: all var(--duration-normal) var(--ease-standard);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quote-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--color-primary);
+            transform: scaleX(0);
+            transition: transform var(--duration-normal) var(--ease-standard);
+        }
+
+        .quote-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .quote-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .quote-text {
+            font-size: var(--font-size-lg);
+            line-height: 1.6;
+            color: var(--color-text);
+            margin-bottom: var(--space-16);
+            font-weight: var(--font-weight-normal);
+            flex-grow: 1;
+            position: relative;
+            padding-left: var(--space-24);
+        }
+
+        .quote-text::before {
+            content: "\"";
+            position: absolute;
+            left: 0;
+            top: -8px;
+            font-size: 3em;
+            color: var(--color-primary);
+            opacity: 0.3;
+            font-family: Georgia, serif;
+        }
+
+        .quote-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: var(--space-16);
+            border-top: 1px solid var(--color-card-border-inner);
+        }
+
+        .quote-category {
+            font-size: var(--font-size-sm);
+            font-weight: var(--font-weight-medium);
+            color: var(--color-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .quote-actions {
+            display: flex;
+            gap: var(--space-8);
+        }
+
+        .action-btn {
+            background: none;
+            border: none;
+            color: var(--color-text-secondary);
+            cursor: pointer;
+            padding: var(--space-4);
+            border-radius: var(--radius-sm);
+            transition: all var(--duration-fast) var(--ease-standard);
+        }
+
+        .action-btn:hover {
+            color: var(--color-primary);
+            background: var(--color-secondary);
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: var(--space-16);
+            margin-top: var(--space-32);
+        }
+
+        .page-btn {
+            display: flex;
+            align-items: center;
+            gap: var(--space-8);
+            background: var(--color-surface);
+            border: 1px solid var(--color-card-border);
+            color: var(--color-text);
+            padding: var(--space-10) var(--space-20);
+            border-radius: var(--radius-base);
+            font-size: var(--font-size-base);
+            font-weight: var(--font-weight-medium);
+            cursor: pointer;
+            transition: all var(--duration-fast) var(--ease-standard);
+        }
+
+        .page-btn:hover {
+            background: var(--color-secondary-hover);
+            border-color: var(--color-primary);
+        }
+
+        .page-btn:active {
+            transform: translateY(0);
+        }
+
+        .page-btn:focus-visible {
+            outline: var(--focus-outline);
+            outline-offset: 2px;
+        }
+
+        .page-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .page-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .page-info {
+            font-size: var(--font-size-base);
+            color: var(--color-text-secondary);
+        }
+
+        /* Mobile Category Toggle */
+        .mobile-category-toggle {
+            display: none;
+            background: var(--color-primary);
+            color: var(--color-btn-primary-text);
+            padding: var(--space-12) var(--space-16);
+            border-radius: var(--radius-base);
+            font-weight: var(--font-weight-medium);
+            margin-bottom: var(--space-16);
+            width: 100%;
+            justify-content: center;
+            align-items: center;
+            gap: var(--space-8);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .main-container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                position: static;
+            }
+
+            .quotes-grid {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: var(--space-16);
+            }
+
+            .header-actions {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .search-bar {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .quotes-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .content-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: var(--space-8);
+            }
+
+            .mobile-category-toggle {
+                display: flex;
+            }
+
+            .sidebar {
+                display: none;
+            }
+
+            .sidebar.active {
+                display: block;
+            }
+
+            .quote-of-day-banner {
+                padding: var(--space-24) var(--space-16);
+            }
+
+            .banner-content h2 {
+                font-size: var(--font-size-xl);
+            }
+
+            .daily-quote-text {
+                font-size: var(--font-size-lg);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-container {
+                padding: 0 var(--space-8) var(--space-24);
+            }
+
+            .quote-card {
+                padding: var(--space-20);
+            }
+
+            .quote-text {
+                font-size: var(--font-size-base);
+            }
+
+            .page-btn span {
+                display: none;
+            }
+
+            .page-btn {
+                padding: var(--space-10) var(--space-16);
+            }
+
+            .daily-quote-text {
+                font-size: var(--font-size-base);
+            }
+        }
+
+        /* Loading Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .quote-card {
+            animation: fadeIn var(--duration-normal) var(--ease-standard);
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: var(--space-24);
+            right: var(--space-24);
+            background: var(--color-surface);
+            border: 1px solid var(--color-card-border);
+            border-radius: var(--radius-base);
+            padding: var(--space-16) var(--space-24);
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            align-items: center;
+            gap: var(--space-12);
+            z-index: 1000;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all var(--duration-normal) var(--ease-standard);
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast-icon {
+            color: var(--color-success);
+            font-size: var(--font-size-lg);
+        }
+
+        .toast-message {
+            font-size: var(--font-size-base);
+            color: var(--color-text);
+        }
+    </style>
+</head>
+<body data-color-scheme="light">
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">Quotes Gallery</div>
+            <div class="header-actions">
+                <div class="search-bar">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" class="search-input" id="searchInput" placeholder="Search quotes...">
+                    <button class="search-clear" id="searchClear">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <i class="fas fa-moon"></i>
+                    <i class="fas fa-sun"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Quote of the Day Banner -->
+    <section class="quote-of-day-banner">
+        <div class="banner-content">
+            <h2>Quote of the Day</h2>
+            <p class="daily-quote-text" id="dailyQuoteText"></p>
+            <span class="daily-quote-category" id="dailyQuoteCategory"></span>
+        </div>
+    </section>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Mobile Category Toggle -->
+        <button class="mobile-category-toggle" id="mobileCategoryToggle">
+            <i class="fas fa-filter"></i>
+            Browse Categories
+        </button>
+
+        <!-- Sidebar Category Selector -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h3>Categories</h3>
+                <button class="action-btn" id="closeSidebar">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <nav class="category-nav" id="categoryNav">
+                <!-- Categories will be populated by JavaScript -->
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="content-header">
+                <h2 id="currentCategory">Motivational & Success</h2>
+                <div class="quotes-counter" id="quotesCounter">Showing 6 of 12 quotes</div>
+            </div>
+
+            <!-- Quotes Grid -->
+            <div class="quotes-grid" id="quotesGrid">
+                <!-- Quotes will be populated by JavaScript -->
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination">
+                <button class="page-btn" id="prevPage">
+                    <i class="fas fa-chevron-left"></i>
+                    <span>Previous</span>
+                </button>
+                <div class="page-info" id="pageInfo">Page 1 of 2</div>
+                <button class="page-btn" id="nextPage">
+                    <span>Next</span>
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </main>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle toast-icon"></i>
+        <div class="toast-message" id="toastMessage">Quote copied to clipboard!</div>
+    </div>
+
+    <script>
+        // ============================================================
+        // QUOTES DATA STRUCTURE
+        // ============================================================
+        const quotesData = {
+            "motivational": {
+                name: "Motivational & Success",
+                quotes: [
+                    "Success is not final, failure is not fatal: It is the courage to continue that counts.",
+                    "The only way to do great work is to love what you do.",
+                    "Your time is limited, don't waste it living someone else's life.",
+                    "The future belongs to those who believe in the beauty of their dreams.",
+                    "It does not matter how slowly you go as long as you do not stop.",
+                    "Don't watch the clock; do what it does. Keep going.",
+                    "Believe you can and you're halfway there.",
+                    "The only limit to our realization of tomorrow will be our doubts of today."
+                ]
+            },
+            "love": {
+                name: "Love & Romance",
+                quotes: [
+                    "I have waited for this opportunity for more than half a century, to repeat to you once again my vow of eternal fidelity and everlasting love.",
+                    "The best thing to hold onto in life is each other.",
+                    "You don't love someone for their looks, or their clothes, or for their fancy car, but because they sing a song only you can hear.",
+                    "Love is composed of a single soul inhabiting two bodies.",
+                    "The greatest happiness of life is the conviction that we are loved; loved for ourselves, or rather, loved in spite of ourselves.",
+                    "To love and be loved is to feel the sun from both sides."
+                ]
+            },
+            "flirty": {
+                name: "Flirty & Intimate",
+                quotes: [
+                    "Are you a magician? Because whenever I look at you, everyone else disappears.",
+                    "Do you have a map? I keep getting lost in your eyes.",
+                    "If you were a vegetable, you'd be a cute-cumber.",
+                    "Is your name Google? Because you have everything I've been searching for.",
+                    "Do you believe in love at first sight, or should I walk by again?",
+                    "If I could rearrange the alphabet, I'd put U and I together."
+                ]
+            },
+            "stoicism": {
+                name: "Stoicism & Ancient Philosophy",
+                quotes: [
+                    "The happiness of your life depends upon the quality of your thoughts.",
+                    "We suffer more often in imagination than in reality.",
+                    "You have power over your mind - not outside events. Realize this, and you will find strength.",
+                    "He who fears death will never do anything worth of a man who is alive.",
+                    "The key is to keep company only with people who uplift you, whose presence calls forth your best.",
+                    "It's not what happens to you, but how you react to it that matters."
+                ]
+            },
+            "trust": {
+                name: "Trust Betrayal & Fake People",
+                quotes: [
+                    "The saddest thing about betrayal is that it never comes from your enemies.",
+                    "Trust takes years to build, seconds to break, and forever to repair.",
+                    "When someone shows you who they are, believe them the first time.",
+                    "The worst kind of hurt is betrayal, because it means someone was willing to hurt you just to make themselves feel better.",
+                    "It's better to be alone than to be with someone who makes you feel alone.",
+                    "Not everyone you lose is a loss."
+                ]
+            },
+            "mental-health": {
+                name: "Mental Health & Emotional Wellness",
+                quotes: [
+                    "Your mental health is a priority. Your happiness is essential. Your self-care is a necessity.",
+                    "It's okay to not be okay. Just don't give up.",
+                    "Healing is not linear. It's okay to have bad days.",
+                    "You don't have to be positive all the time. It's perfectly okay to feel sad, angry, annoyed, frustrated, scared and anxious. Having feelings doesn't make you a negative person. It makes you human.",
+                    "Self-care is how you take your power back.",
+                    "Your current situation is not your final destination."
+                ]
+            },
+            "wisdom": {
+                name: "Life Wisdom & Practical Advice",
+                quotes: [
+                    "The two most important days in your life are the day you are born and the day you find out why.",
+                    "Life is 10% what happens to you and 90% how you react to it.",
+                    "In the end, we only regret the chances we didn't take.",
+                    "The only way to do great work is to love what you do.",
+                    "If you want to lift yourself up, lift up someone else.",
+                    "The purpose of our lives is to be happy."
+                ]
+            },
+            "self-reflection": {
+                name: "Self-Reflection & Identity",
+                quotes: [
+                    "Knowing yourself is the beginning of all wisdom.",
+                    "The unexamined life is not worth living.",
+                    "Your task is not to seek for love, but merely to seek and find all the barriers within yourself that you have built against it.",
+                    "Who looks outside, dreams; who looks inside, awakes.",
+                    "The most difficult thing in life is to know yourself.",
+                    "We do not learn from experience... we learn from reflecting on experience."
+                ]
+            },
+            "religion": {
+                name: "Religion & Spirituality",
+                quotes: [
+                    "Faith is taking the first step even when you don't see the whole staircase.",
+                    "The soul always knows what to do to heal itself. The challenge is to silence the mind.",
+                    "Prayer is not asking. It is a longing of the soul.",
+                    "The best and most beautiful things in the world cannot be seen or even touched - they must be felt with the heart.",
+                    "God does not require us to be successful, only faithful.",
+                    "We are not human beings having a spiritual experience. We are spiritual beings having a human experience."
+                ]
+            },
+            "dark-humor": {
+                name: "Dark Humor & Sarcasm",
+                quotes: [
+                    "I'm not arguing, I'm just explaining why I'm right.",
+                    "My bed is a magical place where I suddenly remember everything I was supposed to do.",
+                    "I don't have a bad handwriting, I have my own font.",
+                    "I'm not lazy, I'm on energy saving mode.",
+                    "My brain has too many tabs open.",
+                    "I'm not procrastinating, I'm doing side quests."
+                ]
+            },
+            "war": {
+                name: "War Politics & Society",
+                quotes: [
+                    "In war, truth is the first casualty.",
+                    "The supreme art of war is to subdue the enemy without fighting.",
+                    "Politics is war without bloodshed while war is politics with bloodshed.",
+                    "War does not determine who is right - only who is left.",
+                    "The first casualty when war comes is truth.",
+                    "Older men declare war. But it is youth that must fight and die."
+                ]
+            },
+            "time": {
+                name: "Time Mortality & Change",
+                quotes: [
+                    "The trouble is, you think you have time.",
+                    "Time you enjoy wasting is not wasted time.",
+                    "Change is the only constant in life.",
+                    "The way I see it, if you want the rainbow, you gotta put up with the rain.",
+                    "Time is what we want most, but what we use worst.",
+                    "The only time you should ever look back is to see how far you've come."
+                ]
+            },
+            "cultural": {
+                name: "Cultural & Ethnic Proverbs",
+                quotes: [
+                    "Fall seven times, stand up eight. - Japanese Proverb",
+                    "If you want to go fast, go alone. If you want to go far, go together. - African Proverb",
+                    "A bird does not sing because it has an answer. It sings because it has a song. - Chinese Proverb",
+                    "He who does not travel will not know the value of men. - Moorish Proverb",
+                    "A smooth sea never made a skilled sailor. - English Proverb",
+                    "After the game, the king and the pawn go into the same box. - Italian Proverb"
+                ]
+            },
+            "character": {
+                name: "Character & Values",
+                quotes: [
+                    "Character is how you treat those who can do nothing for you.",
+                    "Our character is what we do when we think no one is looking.",
+                    "The measure of a man's real character is what he would do if he knew he would never be found out.",
+                    "Character cannot be developed in ease and quiet. Only through experience of trial and suffering can the soul be strengthened, vision cleared, ambition inspired, and success achieved.",
+                    "Watch your thoughts, they become your words; watch your words, they become your actions; watch your actions, they become your habits; watch your habits, they become your character; watch your character, it becomes your destiny.",
+                    "Reputation is what others think of us; character is what God knows of us."
+                ]
+            }
+        };
+
+        // ============================================================
+        // APPLICATION STATE
+        // ============================================================
+        let currentCategory = 'motivational';
+        let currentPage = 1;
+        const quotesPerPage = 6;
+        let filteredQuotes = [];
+
+        // ============================================================
+        // DOM ELEMENTS
+        // ============================================================
+        const categoryNav = document.getElementById('categoryNav');
+        const quotesGrid = document.getElementById('quotesGrid');
+        const currentCategoryElement = document.getElementById('currentCategory');
+        const quotesCounter = document.getElementById('quotesCounter');
+        const prevPageBtn = document.getElementById('prevPage');
+        const nextPageBtn = document.getElementById('nextPage');
+        const pageInfo = document.getElementById('pageInfo');
+        const searchInput = document.getElementById('searchInput');
+        const searchClear = document.getElementById('searchClear');
+        const mobileCategoryToggle = document.getElementById('mobileCategoryToggle');
+        const sidebar = document.getElementById('sidebar');
+        const closeSidebar = document.getElementById('closeSidebar');
+        const toast = document.getElementById('toast');
+        const toastMessage = document.getElementById('toastMessage');
+        const themeToggle = document.getElementById('themeToggle');
+        const dailyQuoteText = document.getElementById('dailyQuoteText');
+        const dailyQuoteCategory = document.getElementById('dailyQuoteCategory');
+
+        // ============================================================
+        // INITIALIZATION
+        // ============================================================
+        function init() {
+            renderCategories();
+            displayQuotes();
+            setupEventListeners();
+            setupTheme();
+            displayDailyQuote();
+        }
+
+        // ============================================================
+        // QUOTE OF THE DAY
+        // ============================================================
+        function displayDailyQuote() {
+            // Get today's date to use as a seed for deterministic selection
+            const today = new Date();
+            const seed = today.getFullYear() * 10000 + (today.getMonth() + 1) * 100 + today.getDate();
+            
+            // Get all quotes from all categories
+            const allQuotes = [];
+            Object.keys(quotesData).forEach(categoryKey => {
+                const category = quotesData[categoryKey];
+                category.quotes.forEach(quote => {
+                    allQuotes.push({
+                        text: quote,
+                        category: category.name,
+                        categoryKey: categoryKey
+                    });
+                });
+            });
+            
+            // Use the seed to select a consistent quote for the day
+            const quoteIndex = seed % allQuotes.length;
+            const dailyQuote = allQuotes[quoteIndex];
+            
+            // Display the daily quote
+            dailyQuoteText.textContent = dailyQuote.text;
+            dailyQuoteCategory.textContent = dailyQuote.category;
+        }
+
+        // ============================================================
+        // THEME MANAGEMENT
+        // ============================================================
+        function setupTheme() {
+            // Check for saved theme preference or default to light
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.body.setAttribute('data-color-scheme', savedTheme);
+            
+            // Update toggle button state
+            updateThemeToggle(savedTheme);
+        }
+
+        function toggleTheme() {
+            const currentTheme = document.body.getAttribute('data-color-scheme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            
+            // Update theme
+            document.body.setAttribute('data-color-scheme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            
+            // Update toggle button
+            updateThemeToggle(newTheme);
+        }
+
+        function updateThemeToggle(theme) {
+            const moonIcon = themeToggle.querySelector('.fa-moon');
+            const sunIcon = themeToggle.querySelector('.fa-sun');
+            
+            if (theme === 'light') {
+                moonIcon.style.display = 'block';
+                sunIcon.style.display = 'none';
+            } else {
+                moonIcon.style.display = 'none';
+                sunIcon.style.display = 'block';
+            }
+        }
+
+        // ============================================================
+        // RENDER FUNCTIONS
+        // ============================================================
+        function renderCategories() {
+            categoryNav.innerHTML = '';
+            
+            Object.keys(quotesData).forEach(categoryKey => {
+                const category = quotesData[categoryKey];
+                const button = document.createElement('button');
+                button.className = `category-btn ${categoryKey === currentCategory ? 'active' : ''}`;
+                button.dataset.category = categoryKey;
+                
+                // Add icon based on category
+                const icon = document.createElement('div');
+                icon.className = 'category-icon';
+                
+                // Set icons for different categories
+                const icons = {
+                    'motivational': 'fas fa-trophy',
+                    'love': 'fas fa-heart',
+                    'flirty': 'fas fa-kiss-wink-heart',
+                    'stoicism': 'fas fa-brain',
+                    'trust': 'fas fa-user-secret',
+                    'mental-health': 'fas fa-head-side-heart', // Added icon for Mental Health
+                    'wisdom': 'fas fa-lightbulb',
+                    'self-reflection': 'fas fa-user-injured',
+                    'religion': 'fas fa-pray',
+                    'dark-humor': 'fas fa-grin-tongue-squint',
+                    'war': 'fas fa-fist-raised',
+                    'time': 'fas fa-hourglass-half',
+                    'cultural': 'fas fa-globe-americas',
+                    'character': 'fas fa-user-shield'
+                };
+                
+                icon.innerHTML = `<i class="${icons[categoryKey] || 'fas fa-quote-right'}"></i>`;
+                
+                const text = document.createElement('span');
+                text.textContent = category.name;
+                
+                button.appendChild(icon);
+                button.appendChild(text);
+                
+                button.addEventListener('click', () => {
+                    changeCategory(categoryKey);
+                    if (window.innerWidth <= 768) {
+                        sidebar.classList.remove('active');
+                    }
+                });
+                
+                categoryNav.appendChild(button);
+            });
+        }
+
+        function displayQuotes() {
+            const category = quotesData[currentCategory];
+            const allQuotes = category.quotes;
+            
+            // Apply search filter if any
+            if (searchInput.value.trim()) {
+                filteredQuotes = allQuotes.filter(quote => 
+                    quote.toLowerCase().includes(searchInput.value.trim().toLowerCase())
+                );
+            } else {
+                filteredQuotes = [...allQuotes];
+            }
+            
+            // Calculate pagination
+            const totalPages = Math.ceil(filteredQuotes.length / quotesPerPage);
+            const startIndex = (currentPage - 1) * quotesPerPage;
+            const endIndex = Math.min(startIndex + quotesPerPage, filteredQuotes.length);
+            const pageQuotes = filteredQuotes.slice(startIndex, endIndex);
+            
+            // Update UI
+            currentCategoryElement.textContent = category.name;
+            quotesCounter.textContent = `Showing ${startIndex + 1}-${endIndex} of ${filteredQuotes.length} quotes`;
+            pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
+            
+            // Enable/disable pagination buttons
+            prevPageBtn.disabled = currentPage === 1;
+            nextPageBtn.disabled = currentPage === totalPages || totalPages === 0;
+            
+            // Render quotes
+            quotesGrid.innerHTML = '';
+            
+            if (pageQuotes.length === 0) {
+                quotesGrid.innerHTML = `
+                    <div class="no-results" style="grid-column: 1 / -1; text-align: center; padding: 40px; color: var(--color-text-secondary);">
+                        <i class="fas fa-search" style="font-size: 48px; margin-bottom: 16px; opacity: 0.5;"></i>
+                        <h3>No quotes found</h3>
+                        <p>Try adjusting your search or browse a different category</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            pageQuotes.forEach(quote => {
+                const card = document.createElement('div');
+                card.className = 'quote-card';
+                
+                card.innerHTML = `
+                    <div class="quote-text">${quote}</div>
+                    <div class="quote-meta">
+                        <span class="quote-category">${category.name}</span>
+                        <div class="quote-actions">
+                            <button class="action-btn copy-btn" title="Copy quote">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                            <button class="action-btn share-btn" title="Share quote">
+                                <i class="fas fa-share-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                // Add event listeners for action buttons
+                const copyBtn = card.querySelector('.copy-btn');
+                const shareBtn = card.querySelector('.share-btn');
+                
+                copyBtn.addEventListener('click', () => copyToClipboard(quote));
+                shareBtn.addEventListener('click', () => shareQuote(quote, category.name));
+                
+                quotesGrid.appendChild(card);
+            });
+        }
+
+        // ============================================================
+        // EVENT HANDLERS
+        // ============================================================
+        function changeCategory(category) {
+            currentCategory = category;
+            currentPage = 1;
+            
+            // Update active category button
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.category === category) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            displayQuotes();
+        }
+
+        function nextPage() {
+            const totalPages = Math.ceil(filteredQuotes.length / quotesPerPage);
+            if (currentPage < totalPages) {
+                currentPage++;
+                displayQuotes();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function prevPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                displayQuotes();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function handleSearch() {
+            currentPage = 1;
+            displayQuotes();
+        }
+
+        function clearSearch() {
+            searchInput.value = '';
+            handleSearch();
+        }
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('Quote copied to clipboard!');
+            });
+        }
+
+        function shareQuote(quote, category) {
+            if (navigator.share) {
+                navigator.share({
+                    title: `Quote from ${category}`,
+                    text: quote,
+                    url: window.location.href
+                });
+            } else {
+                copyToClipboard(quote);
+                showToast('Quote copied to clipboard! Share it manually.');
+            }
+        }
+
+        function showToast(message) {
+            toastMessage.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        function toggleSidebar() {
+            sidebar.classList.toggle('active');
+        }
+
+        function setupEventListeners() {
+            // Pagination
+            prevPageBtn.addEventListener('click', prevPage);
+            nextPageBtn.addEventListener('click', nextPage);
+            
+            // Search
+            searchInput.addEventListener('input', handleSearch);
+            searchClear.addEventListener('click', clearSearch);
+            
+            // Mobile sidebar
+            mobileCategoryToggle.addEventListener('click', toggleSidebar);
+            closeSidebar.addEventListener('click', () => {
+                sidebar.classList.remove('active');
+            });
+            
+            // Theme toggle
+            themeToggle.addEventListener('click', toggleTheme);
+            
+            // Close sidebar when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!sidebar.contains(e.target) && 
+                    !mobileCategoryToggle.contains(e.target) && 
+                    sidebar.classList.contains('active')) {
+                    sidebar.classList.remove('active');
+                }
+            });
+            
+            // Keyboard navigation
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowLeft') {
+                    prevPage();
+                } else if (e.key === 'ArrowRight') {
+                    nextPage();
+                }
+            });
+        }
+
+        // ============================================================
+        // START THE APPLICATION
+        // ============================================================
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+    </script>
+</body>
+</html>
