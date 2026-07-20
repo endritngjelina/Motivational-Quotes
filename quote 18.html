@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quotes Gallery</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --bg2: #111118;
+      --surface: #16161f;
+      --surface2: #1e1e2a;
+      --border: rgba(255,255,255,0.07);
+      --border2: rgba(255,255,255,0.12);
+      --text: #e8e6f0;
+      --text2: #8a8a9a;
+      --text3: #5a5a6a;
+      --accent: #c9a84c;
+      --accent2: #e8c97a;
+      --accent-dim: rgba(201, 168, 76, 0.12);
+      --accent-glow: rgba(201, 168, 76, 0.25);
+      --red: #e05c6a;
+      --serif: 'Cormorant Garamond', Georgia, serif;
+      --sans: 'DM Sans', system-ui, sans-serif;
+      --radius: 16px;
+      --radius-sm: 10px;
+      --ease: cubic-bezier(0.16, 1, 0.3, 1);
+      --shadow: 0 8px 32px rgba(0,0,0,0.4), 0 2px 8px rgba(0,0,0,0.3);
+      --shadow-lg: 0 24px 64px rgba(0,0,0,0.5), 0 8px 24px rgba(0,0,0,0.3);
+    }
+
+    [data-theme="light"] {
+      --bg: #f5f2eb;
+      --bg2: #ede9df;
+      --surface: #faf8f3;
+      --surface2: #fffdf8;
+      --border: rgba(0,0,0,0.07);
+      --border2: rgba(0,0,0,0.12);
+      --text: #1a1614;
+      --text2: #6b6559;
+      --text3: #a09890;
+      --accent: #9a6e2a;
+      --accent2: #b8842e;
+      --accent-dim: rgba(154,110,42,0.1);
+      --accent-glow: rgba(154,110,42,0.2);
+      --shadow: 0 4px 24px rgba(0,0,0,0.08), 0 1px 4px rgba(0,0,0,0.06);
+      --shadow-lg: 0 16px 48px rgba(0,0,0,0.12), 0 4px 16px rgba(0,0,0,0.08);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      font-family: var(--sans);
+      font-size: 15px;
+      background: var(--bg);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      transition: background 0.4s var(--ease), color 0.4s var(--ease);
+    }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 99px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+    /* ── HEADER ── */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      background: rgba(10, 10, 15, 0.85);
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+      border-bottom: 1px solid var(--border);
+      transition: background 0.4s var(--ease);
+    }
+    [data-theme="light"] .header {
+      background: rgba(245, 242, 235, 0.88);
+    }
+
+    .header-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 28px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .logo {
+      font-family: var(--serif);
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: var(--text);
+      letter-spacing: -0.02em;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .logo-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+
+    /* ── SEARCH ── */
+    .search-wrap {
+      position: relative;
+      flex: 1;
+      max-width: 360px;
+    }
+    .search-input {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 0.875rem;
+      padding: 10px 40px 10px 16px;
+      border-radius: 99px;
+      outline: none;
+      transition: all 0.25s var(--ease);
+    }
+    .search-input::placeholder { color: var(--text3); }
+    .search-input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+      background: var(--surface2);
+    }
+    .search-icon {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text3);
+      font-size: 0.8rem;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+    .search-clear {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--text3);
+      cursor: pointer;
+      padding: 4px;
+      border-radius: 50%;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.2s, background 0.2s;
+      font-size: 0.8rem;
+    }
+    .search-clear:hover { color: var(--red); background: rgba(224,92,106,0.12); }
+    .search-input:not(:placeholder-shown) ~ .search-icon { display: none; }
+    .search-input:not(:placeholder-shown) ~ .search-clear { display: flex; }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+
+    /* ── ICON BTN ── */
+    .icon-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s var(--ease);
+      font-size: 0.875rem;
+    }
+    .icon-btn:hover {
+      background: var(--surface2);
+      color: var(--text);
+      border-color: var(--border2);
+      transform: scale(1.05);
+    }
+    .icon-btn:active { transform: scale(0.95); }
+
+    /* ── HERO BANNER ── */
+    .hero {
+      position: relative;
+      padding: 56px 28px 52px;
+      overflow: hidden;
+      background: var(--bg2);
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 120% at 60% 50%, rgba(201,168,76,0.08) 0%, transparent 65%),
+                  radial-gradient(ellipse 50% 80% at 10% 80%, rgba(201,168,76,0.04) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    [data-theme="light"] .hero-bg {
+      background: radial-gradient(ellipse 80% 120% at 60% 50%, rgba(154,110,42,0.1) 0%, transparent 65%),
+                  radial-gradient(ellipse 50% 80% at 10% 80%, rgba(154,110,42,0.05) 0%, transparent 60%);
+    }
+    .hero-inner {
+      position: relative;
+      max-width: 760px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent-dim);
+      border: 1px solid rgba(201,168,76,0.25);
+      color: var(--accent);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 99px;
+      margin-bottom: 24px;
+    }
+    .hero-badge i { font-size: 0.65rem; }
+    .hero-quote {
+      font-family: var(--serif);
+      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+      font-style: italic;
+      font-weight: 300;
+      line-height: 1.45;
+      color: var(--text);
+      margin-bottom: 24px;
+      position: relative;
+    }
+    .hero-quote::before {
+      content: '\201C';
+      font-family: var(--serif);
+      font-size: 6rem;
+      color: var(--accent);
+      opacity: 0.25;
+      position: absolute;
+      top: -20px;
+      left: -20px;
+      line-height: 1;
+      pointer-events: none;
+    }
+    .hero-category-tag {
+      display: inline-block;
+      background: var(--surface);
+      border: 1px solid var(--border2);
+      color: var(--text2);
+      font-size: 0.78rem;
+      font-weight: 400;
+      padding: 4px 14px;
+      border-radius: 99px;
+      letter-spacing: 0.04em;
+    }
+
+    /* ── LAYOUT ── */
+    .layout {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 32px 28px 60px;
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 32px;
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      position: sticky;
+      top: 80px;
+      height: fit-content;
+      max-height: calc(100vh - 100px);
+      overflow-y: auto;
+    }
+    .sidebar-label {
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text3);
+      padding: 0 12px 12px;
+    }
+    .sidebar-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 12px 12px;
+    }
+    .cat-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      padding: 10px 12px;
+      background: none;
+      border: none;
+      border-radius: var(--radius-sm);
+      color: var(--text2);
+      font-family: var(--sans);
+      font-size: 0.85rem;
+      font-weight: 400;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.18s var(--ease);
+      position: relative;
+    }
+    .cat-btn:hover { background: var(--surface); color: var(--text); }
+    .cat-btn.active {
+      background: var(--accent-dim);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .cat-btn.active::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 20%;
+      height: 60%;
+      width: 3px;
+      background: var(--accent);
+      border-radius: 0 3px 3px 0;
+    }
+    .cat-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 7px;
+      background: var(--surface2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      flex-shrink: 0;
+      transition: background 0.18s;
+    }
+    .cat-btn.active .cat-icon {
+      background: var(--accent-glow);
+      color: var(--accent);
+    }
+
+    /* ── MAIN ── */
+    .main { min-width: 0; }
+    .content-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      gap: 12px;
+    }
+    .content-title {
+      font-family: var(--serif);
+      font-size: 1.8rem;
+      font-weight: 500;
+      color: var(--text);
+      letter-spacing: -0.02em;
+    }
+    .counter-badge {
+      font-size: 0.8rem;
+      color: var(--text3);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* ── QUOTES GRID ── */
+    .quotes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    /* ── QUOTE CARD ── */
+    .quote-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s var(--ease);
+      animation: fadeUp 0.4s var(--ease) both;
+      cursor: default;
+    }
+    .quote-card::before {
+      content: '\201C';
+      font-family: var(--serif);
+      font-size: 5rem;
+      line-height: 1;
+      color: var(--accent);
+      opacity: 0.1;
+      position: absolute;
+      top: 8px;
+      right: 18px;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .quote-card:hover {
+      background: var(--surface2);
+      border-color: var(--border2);
+      transform: translateY(-3px);
+      box-shadow: var(--shadow);
+    }
+    .quote-card:hover::before { opacity: 0.18; }
+
+    .quote-text {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      font-style: italic;
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--text);
+      flex: 1;
+      position: relative;
+      z-index: 1;
+    }
+
+    .quote-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .quote-tag {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--accent);
+      opacity: 0.8;
+    }
+    .quote-actions {
+      display: flex;
+      gap: 4px;
+    }
+    .action-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: none;
+      border: none;
+      color: var(--text3);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.78rem;
+      transition: all 0.18s var(--ease);
+    }
+    .action-btn:hover {
+      background: var(--surface2);
+      color: var(--text);
+    }
+    .action-btn:active { transform: scale(0.9); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .quote-card:nth-child(1) { animation-delay: 0ms; }
+    .quote-card:nth-child(2) { animation-delay: 50ms; }
+    .quote-card:nth-child(3) { animation-delay: 100ms; }
+    .quote-card:nth-child(4) { animation-delay: 150ms; }
+    .quote-card:nth-child(5) { animation-delay: 200ms; }
+    .quote-card:nth-child(6) { animation-delay: 250ms; }
+
+    /* ── EMPTY STATE ── */
+    .empty {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 80px 20px;
+      color: var(--text3);
+    }
+    .empty i { font-size: 2.5rem; margin-bottom: 16px; opacity: 0.4; display: block; }
+    .empty h3 { font-family: var(--serif); font-size: 1.4rem; font-weight: 400; color: var(--text2); margin-bottom: 8px; }
+    .empty p { font-size: 0.875rem; }
+
+    /* ── PAGINATION ── */
+    .pagination {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 40px;
+    }
+    .page-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text2);
+      padding: 9px 20px;
+      border-radius: 99px;
+      font-family: var(--sans);
+      font-size: 0.83rem;
+      font-weight: 400;
+      cursor: pointer;
+      transition: all 0.2s var(--ease);
+    }
+    .page-btn:hover:not(:disabled) {
+      background: var(--surface2);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    .page-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+    .page-info {
+      font-size: 0.83rem;
+      color: var(--text3);
+      min-width: 90px;
+      text-align: center;
+    }
+
+    /* ── MOBILE TOGGLE ── */
+    .mobile-toggle {
+      display: none;
+      align-items: center;
+      gap: 8px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text2);
+      padding: 9px 16px;
+      border-radius: 99px;
+      font-family: var(--sans);
+      font-size: 0.83rem;
+      cursor: pointer;
+      margin-bottom: 20px;
+      transition: all 0.2s;
+    }
+    .mobile-toggle:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ── TOAST ── */
+    .toast {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      background: var(--surface2);
+      border: 1px solid var(--border2);
+      border-radius: var(--radius-sm);
+      padding: 14px 20px;
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      z-index: 9999;
+      transform: translateY(80px);
+      opacity: 0;
+      transition: all 0.35s var(--ease);
+      max-width: 300px;
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+    .toast-icon { color: var(--accent); font-size: 1rem; }
+    .toast-msg { font-size: 0.85rem; color: var(--text); }
+
+    /* ── DIVIDER ── */
+    hr { border: none; border-top: 1px solid var(--border); margin: 12px 0; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; gap: 20px; }
+      .sidebar {
+        position: static;
+        max-height: none;
+        display: none;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 16px 8px;
+      }
+      .sidebar.open { display: block; }
+      .mobile-toggle { display: flex; }
+    }
+
+    @media (max-width: 640px) {
+      .header-inner { padding: 0 16px; }
+      .layout { padding: 20px 16px 48px; }
+      .hero { padding: 36px 16px 32px; }
+      .hero-quote::before { font-size: 4rem; top: -10px; left: -8px; opacity: 0.15; }
+      .quotes-grid { grid-template-columns: 1fr; }
+      .content-header { flex-direction: column; gap: 4px; }
+      .search-wrap { max-width: 200px; }
+    }
+
+    @media (max-width: 420px) {
+      .page-btn span { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-inner">
+      <div class="logo">
+        <span class="logo-dot"></span>
+        Quotes Gallery
+      </div>
+      <div class="search-wrap">
+        <input type="text" class="search-input" id="searchInput" placeholder="Search quotes…" autocomplete="off">
+        <i class="fas fa-search search-icon"></i>
+        <button class="search-clear" id="searchClear" aria-label="Clear search">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="header-right">
+        <button class="icon-btn" id="themeToggle" aria-label="Toggle theme">
+          <i class="fas fa-sun" id="themeIconSun" style="display:none"></i>
+          <i class="fas fa-moon" id="themeIconMoon"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-inner">
+      <div class="hero-badge">
+        <i class="fas fa-star"></i>
+        Quote of the Day
+      </div>
+      <p class="hero-quote" id="dailyQuoteText">Loading…</p>
+      <span class="hero-category-tag" id="dailyQuoteCategory"></span>
+    </div>
+  </section>
+
+  <!-- LAYOUT -->
+  <div class="layout">
+
+    <!-- Mobile toggle -->
+    <button class="mobile-toggle" id="mobileToggle">
+      <i class="fas fa-list"></i>
+      Browse Categories
+    </button>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-label">Categories</div>
+      <nav id="categoryNav"></nav>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+      <div class="content-header">
+        <h2 class="content-title" id="currentCategory">Motivational &amp; Success</h2>
+        <span class="counter-badge" id="quotesCounter"></span>
+      </div>
+
+      <div class="quotes-grid" id="quotesGrid"></div>
+
+      <div class="pagination">
+        <button class="page-btn" id="prevPage">
+          <i class="fas fa-chevron-left"></i>
+          <span>Previous</span>
+        </button>
+        <div class="page-info" id="pageInfo">Page 1 of 2</div>
+        <button class="page-btn" id="nextPage">
+          <span>Next</span>
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+    </main>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast">
+    <i class="fas fa-check-circle toast-icon"></i>
+    <span class="toast-msg" id="toastMsg"></span>
+  </div>
+
+  <script>
+    // ── DATA ──────────────────────────────────────────────────────────────
+    const quotesData = {
+      motivational: {
+        name: "Motivational & Success",
+        icon: "fas fa-trophy",
+        quotes: [
+          "Success is not final, failure is not fatal: It is the courage to continue that counts.",
+          "The only way to do great work is to love what you do.",
+          "Your time is limited, don't waste it living someone else's life.",
+          "The future belongs to those who believe in the beauty of their dreams.",
+          "It does not matter how slowly you go as long as you do not stop.",
+          "Don't watch the clock; do what it does. Keep going.",
+          "Believe you can and you're halfway there.",
+          "The only limit to our realization of tomorrow will be our doubts of today."
+        ]
+      },
+      love: {
+        name: "Love & Romance",
+        icon: "fas fa-heart",
+        quotes: [
+          "I have waited for this opportunity for more than half a century, to repeat to you once again my vow of eternal fidelity and everlasting love.",
+          "The best thing to hold onto in life is each other.",
+          "You don't love someone for their looks, or their clothes, or for their fancy car, but because they sing a song only you can hear.",
+          "Love is composed of a single soul inhabiting two bodies.",
+          "The greatest happiness of life is the conviction that we are loved; loved for ourselves, or rather, loved in spite of ourselves.",
+          "To love and be loved is to feel the sun from both sides."
+        ]
+      },
+      flirty: {
+        name: "Flirty & Intimate",
+        icon: "fas fa-heart-pulse",
+        quotes: [
+          "Are you a magician? Because whenever I look at you, everyone else disappears.",
+          "Do you have a map? I keep getting lost in your eyes.",
+          "If you were a vegetable, you'd be a cute-cumber.",
+          "Is your name Google? Because you have everything I've been searching for.",
+          "Do you believe in love at first sight, or should I walk by again?",
+          "If I could rearrange the alphabet, I'd put U and I together."
+        ]
+      },
+      stoicism: {
+        name: "Stoicism & Ancient Philosophy",
+        icon: "fas fa-brain",
+        quotes: [
+          "The happiness of your life depends upon the quality of your thoughts.",
+          "We suffer more often in imagination than in reality.",
+          "You have power over your mind - not outside events. Realize this, and you will find strength.",
+          "He who fears death will never do anything worth of a man who is alive.",
+          "The key is to keep company only with people who uplift you, whose presence calls forth your best.",
+          "It's not what happens to you, but how you react to it that matters."
+        ]
+      },
+      trust: {
+        name: "Trust Betrayal & Fake People",
+        icon: "fas fa-user-secret",
+        quotes: [
+          "The saddest thing about betrayal is that it never comes from your enemies.",
+          "Trust takes years to build, seconds to break, and forever to repair.",
+          "When someone shows you who they are, believe them the first time.",
+          "The worst kind of hurt is betrayal, because it means someone was willing to hurt you just to make themselves feel better.",
+          "It's better to be alone than to be with someone who makes you feel alone.",
+          "Not everyone you lose is a loss."
+        ]
+      },
+      "mental-health": {
+        name: "Mental Health & Emotional Wellness",
+        icon: "fas fa-spa",
+        quotes: [
+          "Your mental health is a priority. Your happiness is essential. Your self-care is a necessity.",
+          "It's okay to not be okay. Just don't give up.",
+          "Healing is not linear. It's okay to have bad days.",
+          "You don't have to be positive all the time. It's perfectly okay to feel sad, angry, annoyed, frustrated, scared and anxious. Having feelings doesn't make you a negative person. It makes you human.",
+          "Self-care is how you take your power back.",
+          "Your current situation is not your final destination."
+        ]
+      },
+      wisdom: {
+        name: "Life Wisdom & Practical Advice",
+        icon: "fas fa-lightbulb",
+        quotes: [
+          "The two most important days in your life are the day you are born and the day you find out why.",
+          "Life is 10% what happens to you and 90% how you react to it.",
+          "In the end, we only regret the chances we didn't take.",
+          "The only way to do great work is to love what you do.",
+          "If you want to lift yourself up, lift up someone else.",
+          "The purpose of our lives is to be happy."
+        ]
+      },
+      "self-reflection": {
+        name: "Self-Reflection & Identity",
+        icon: "fas fa-mirror",
+        quotes: [
+          "Knowing yourself is the beginning of all wisdom.",
+          "The unexamined life is not worth living.",
+          "Your task is not to seek for love, but merely to seek and find all the barriers within yourself that you have built against it.",
+          "Who looks outside, dreams; who looks inside, awakes.",
+          "The most difficult thing in life is to know yourself.",
+          "We do not learn from experience... we learn from reflecting on experience."
+        ]
+      },
+      religion: {
+        name: "Religion & Spirituality",
+        icon: "fas fa-hands-praying",
+        quotes: [
+          "Faith is taking the first step even when you don't see the whole staircase.",
+          "The soul always knows what to do to heal itself. The challenge is to silence the mind.",
+          "Prayer is not asking. It is a longing of the soul.",
+          "The best and most beautiful things in the world cannot be seen or even touched - they must be felt with the heart.",
+          "God does not require us to be successful, only faithful.",
+          "We are not human beings having a spiritual experience. We are spiritual beings having a human experience."
+        ]
+      },
+      "dark-humor": {
+        name: "Dark Humor & Sarcasm",
+        icon: "fas fa-masks-theater",
+        quotes: [
+          "I'm not arguing, I'm just explaining why I'm right.",
+          "My bed is a magical place where I suddenly remember everything I was supposed to do.",
+          "I don't have a bad handwriting, I have my own font.",
+          "I'm not lazy, I'm on energy saving mode.",
+          "My brain has too many tabs open.",
+          "I'm not procrastinating, I'm doing side quests."
+        ]
+      },
+      war: {
+        name: "War, Politics & Society",
+        icon: "fas fa-globe",
+        quotes: [
+          "In war, truth is the first casualty.",
+          "The supreme art of war is to subdue the enemy without fighting.",
+          "Politics is war without bloodshed while war is politics with bloodshed.",
+          "War does not determine who is right - only who is left.",
+          "The first casualty when war comes is truth.",
+          "Older men declare war. But it is youth that must fight and die."
+        ]
+      },
+      time: {
+        name: "Time, Mortality & Change",
+        icon: "fas fa-hourglass-half",
+        quotes: [
+          "The trouble is, you think you have time.",
+          "Time you enjoy wasting is not wasted time.",
+          "Change is the only constant in life.",
+          "The way I see it, if you want the rainbow, you gotta put up with the rain.",
+          "Time is what we want most, but what we use worst.",
+          "The only time you should ever look back is to see how far you've come."
+        ]
+      },
+      cultural: {
+        name: "Cultural & Ethnic Proverbs",
+        icon: "fas fa-globe-americas",
+        quotes: [
+          "Fall seven times, stand up eight. — Japanese Proverb",
+          "If you want to go fast, go alone. If you want to go far, go together. — African Proverb",
+          "A bird does not sing because it has an answer. It sings because it has a song. — Chinese Proverb",
+          "He who does not travel will not know the value of men. — Moorish Proverb",
+          "A smooth sea never made a skilled sailor. — English Proverb",
+          "After the game, the king and the pawn go into the same box. — Italian Proverb"
+        ]
+      },
+      character: {
+        name: "Character & Values",
+        icon: "fas fa-shield-halved",
+        quotes: [
+          "Character is how you treat those who can do nothing for you.",
+          "Our character is what we do when we think no one is looking.",
+          "The measure of a man's real character is what he would do if he knew he would never be found out.",
+          "Character cannot be developed in ease and quiet. Only through experience of trial and suffering can the soul be strengthened, vision cleared, ambition inspired, and success achieved.",
+          "Watch your thoughts, they become your words; watch your words, they become your actions; watch your actions, they become your habits; watch your habits, they become your character; watch your character, it becomes your destiny.",
+          "Reputation is what others think of us; character is what God knows of us."
+        ]
+      }
+    };
+
+    // ── STATE ────────────────────────────────────────────────────────────
+    let currentCategory = 'motivational';
+    let currentPage = 1;
+    const PER_PAGE = 6;
+    let filteredQuotes = [];
+
+    // ── DOM ──────────────────────────────────────────────────────────────
+    const $catNav    = document.getElementById('categoryNav');
+    const $grid      = document.getElementById('quotesGrid');
+    const $catTitle  = document.getElementById('currentCategory');
+    const $counter   = document.getElementById('quotesCounter');
+    const $prevBtn   = document.getElementById('prevPage');
+    const $nextBtn   = document.getElementById('nextPage');
+    const $pageInfo  = document.getElementById('pageInfo');
+    const $search    = document.getElementById('searchInput');
+    const $clear     = document.getElementById('searchClear');
+    const $toast     = document.getElementById('toast');
+    const $toastMsg  = document.getElementById('toastMsg');
+    const $sidebar   = document.getElementById('sidebar');
+    const $mobToggle = document.getElementById('mobileToggle');
+    const $themeBtn  = document.getElementById('themeToggle');
+    const $heroQuote = document.getElementById('dailyQuoteText');
+    const $heroCat   = document.getElementById('dailyQuoteCategory');
+    const $sunIcon   = document.getElementById('themeIconSun');
+    const $moonIcon  = document.getElementById('themeIconMoon');
+
+    // ── INIT ─────────────────────────────────────────────────────────────
+    function init() {
+      applyTheme(localStorage.getItem('theme') || 'dark');
+      buildCategories();
+      displayDailyQuote();
+      render();
+      bindEvents();
+    }
+
+    // ── THEME ────────────────────────────────────────────────────────────
+    function applyTheme(t) {
+      document.documentElement.setAttribute('data-theme', t);
+      $sunIcon.style.display  = t === 'dark' ? 'block' : 'none';
+      $moonIcon.style.display = t === 'dark' ? 'none'  : 'block';
+      localStorage.setItem('theme', t);
+    }
+
+    // ── DAILY QUOTE ──────────────────────────────────────────────────────
+    function displayDailyQuote() {
+      const all = [];
+      Object.values(quotesData).forEach(c => c.quotes.forEach(q => all.push({ text: q, cat: c.name })));
+      const d = new Date();
+      const idx = (d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate()) % all.length;
+      $heroQuote.textContent = all[idx].text;
+      $heroCat.textContent   = all[idx].cat;
+    }
+
+    // ── BUILD CATEGORIES ─────────────────────────────────────────────────
+    function buildCategories() {
+      $catNav.innerHTML = '';
+      Object.entries(quotesData).forEach(([key, cat]) => {
+        const btn = document.createElement('button');
+        btn.className = `cat-btn${key === currentCategory ? ' active' : ''}`;
+        btn.dataset.key = key;
+        btn.innerHTML = `
+          <span class="cat-icon"><i class="${cat.icon}"></i></span>
+          <span>${cat.name}</span>
+        `;
+        btn.addEventListener('click', () => {
+          currentCategory = key;
+          currentPage = 1;
+          document.querySelectorAll('.cat-btn').forEach(b => b.classList.toggle('active', b.dataset.key === key));
+          render();
+          if (window.innerWidth <= 900) $sidebar.classList.remove('open');
+        });
+        $catNav.appendChild(btn);
+      });
+    }
+
+    // ── RENDER ───────────────────────────────────────────────────────────
+    function render() {
+      const cat = quotesData[currentCategory];
+      const q   = $search.value.trim().toLowerCase();
+      filteredQuotes = q
+        ? cat.quotes.filter(s => s.toLowerCase().includes(q))
+        : [...cat.quotes];
+
+      const total = Math.ceil(filteredQuotes.length / PER_PAGE);
+      if (currentPage > total) currentPage = Math.max(1, total);
+
+      const start = (currentPage - 1) * PER_PAGE;
+      const end   = Math.min(start + PER_PAGE, filteredQuotes.length);
+      const page  = filteredQuotes.slice(start, end);
+
+      $catTitle.textContent  = cat.name;
+      $counter.textContent   = filteredQuotes.length
+        ? `${start + 1}–${end} of ${filteredQuotes.length}`
+        : '';
+      $pageInfo.textContent  = total ? `Page ${currentPage} of ${total}` : '';
+      $prevBtn.disabled      = currentPage === 1;
+      $nextBtn.disabled      = currentPage >= total || total === 0;
+
+      $grid.innerHTML = '';
+
+      if (!page.length) {
+        $grid.innerHTML = `
+          <div class="empty">
+            <i class="fas fa-search"></i>
+            <h3>No quotes found</h3>
+            <p>Try a different search or browse another category.</p>
+          </div>`;
+        return;
+      }
+
+      page.forEach(quote => {
+        const card = document.createElement('div');
+        card.className = 'quote-card';
+        card.innerHTML = `
+          <p class="quote-text">${quote}</p>
+          <div class="quote-footer">
+            <span class="quote-tag">${cat.name}</span>
+            <div class="quote-actions">
+              <button class="action-btn copy-btn" title="Copy">
+                <i class="fas fa-copy"></i>
+              </button>
+              <button class="action-btn share-btn" title="Share">
+                <i class="fas fa-share-nodes"></i>
+              </button>
+            </div>
+          </div>`;
+        card.querySelector('.copy-btn').addEventListener('click', () => {
+          navigator.clipboard.writeText(quote).then(() => toast('Copied to clipboard!'));
+        });
+        card.querySelector('.share-btn').addEventListener('click', () => {
+          if (navigator.share) {
+            navigator.share({ title: cat.name, text: quote, url: location.href });
+          } else {
+            navigator.clipboard.writeText(quote).then(() => toast('Copied — share manually!'));
+          }
+        });
+        $grid.appendChild(card);
+      });
+    }
+
+    // ── TOAST ────────────────────────────────────────────────────────────
+    let toastTimer;
+    function toast(msg) {
+      $toastMsg.textContent = msg;
+      $toast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => $toast.classList.remove('show'), 3000);
+    }
+
+    // ── EVENTS ───────────────────────────────────────────────────────────
+    function bindEvents() {
+      $prevBtn.addEventListener('click', () => { if (currentPage > 1) { currentPage--; render(); scrollTo({ top: 0, behavior: 'smooth' }); }});
+      $nextBtn.addEventListener('click', () => {
+        const total = Math.ceil(filteredQuotes.length / PER_PAGE);
+        if (currentPage < total) { currentPage++; render(); scrollTo({ top: 0, behavior: 'smooth' }); }
+      });
+
+      $search.addEventListener('input', () => { currentPage = 1; render(); });
+      $clear.addEventListener('click',  () => { $search.value = ''; currentPage = 1; render(); });
+
+      $themeBtn.addEventListener('click', () => {
+        const current = document.documentElement.getAttribute('data-theme');
+        applyTheme(current === 'dark' ? 'light' : 'dark');
+      });
+
+      $mobToggle.addEventListener('click', () => $sidebar.classList.toggle('open'));
+
+      document.addEventListener('click', e => {
+        if ($sidebar.classList.contains('open') &&
+            !$sidebar.contains(e.target) &&
+            !$mobToggle.contains(e.target)) {
+          $sidebar.classList.remove('open');
+        }
+      });
+
+      document.addEventListener('keydown', e => {
+        if (e.key === 'ArrowLeft')  $prevBtn.click();
+        if (e.key === 'ArrowRight') $nextBtn.click();
+      });
+    }
+
+    init();
+  </script>
+</body>
+</html>
