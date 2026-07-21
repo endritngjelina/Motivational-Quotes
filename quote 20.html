@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quotes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --bg: #FAFAF8;
+      --white: #FFFFFF;
+      --ink: #111110;
+      --ink2: #52524E;
+      --ink3: #A8A29E;
+      --line: #E8E5E0;
+      --line2: #D6D3CE;
+      --red: #D94F3B;
+      --red-bg: #FEF3F1;
+      --red-rgb: 217, 79, 59;
+      --f: 'Plus Jakarta Sans', system-ui, sans-serif;
+      --r: 12px;
+      --r-sm: 8px;
+      --ease: cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    [data-theme="dark"] {
+      --bg: #111110;
+      --white: #1A1A18;
+      --ink: #F5F5F0;
+      --ink2: #A8A29E;
+      --ink3: #57534E;
+      --line: #28271F;
+      --line2: #3A3830;
+      --red: #F06449;
+      --red-bg: rgba(240,100,73,0.1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      font-family: var(--f);
+      background: var(--bg);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+      font-size: 15px;
+    }
+    body { min-height: 100vh; transition: background .3s, color .3s; }
+
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--line2); border-radius: 4px; }
+
+    /* ── NAV ──────────────────────────────────────────────────── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--bg);
+      border-bottom: 1.5px solid var(--ink);
+    }
+    .nav-inner {
+      max-width: 1280px; margin: 0 auto;
+      padding: 0 32px;
+      height: 56px;
+      display: flex; align-items: center; gap: 24px;
+    }
+    .wordmark {
+      font-size: 1.1rem; font-weight: 800;
+      letter-spacing: -0.05em; color: var(--ink);
+      text-transform: uppercase; flex-shrink: 0;
+      user-select: none;
+    }
+    .wordmark em { color: var(--red); font-style: normal; }
+
+    .nav-divider { width: 1px; height: 20px; background: var(--line2); flex-shrink: 0; }
+
+    .search-field {
+      flex: 1; max-width: 320px;
+      display: flex; align-items: center; gap: 10px;
+      border: 1.5px solid var(--line2);
+      border-radius: var(--r-sm);
+      padding: 0 12px;
+      height: 36px;
+      background: var(--white);
+      transition: border-color .15s;
+    }
+    .search-field:focus-within { border-color: var(--ink); }
+    .search-field i { color: var(--ink3); font-size: .75rem; flex-shrink: 0; }
+    .search-field input {
+      border: none; background: none; outline: none;
+      font-family: var(--f); font-size: .85rem; color: var(--ink);
+      flex: 1; min-width: 0;
+    }
+    .search-field input::placeholder { color: var(--ink3); }
+    .search-field button {
+      border: none; background: none; cursor: pointer;
+      color: var(--ink3); font-size: .72rem; padding: 2px;
+      display: none; transition: color .15s;
+    }
+    .search-field button:hover { color: var(--red); }
+    .search-field:has(input:not(:placeholder-shown)) button { display: block; }
+
+    .nav-right { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+
+    .nbtn {
+      height: 34px; padding: 0 14px;
+      border-radius: var(--r-sm);
+      border: 1.5px solid var(--line2);
+      background: var(--white);
+      color: var(--ink2);
+      font-family: var(--f); font-size: .82rem; font-weight: 500;
+      cursor: pointer;
+      display: flex; align-items: center; gap: 7px;
+      transition: border-color .15s, color .15s, background .15s;
+    }
+    .nbtn:hover { border-color: var(--ink); color: var(--ink); }
+    .nbtn.sq { width: 34px; padding: 0; justify-content: center; }
+
+    /* ── FEATURE STRIP ────────────────────────────────────────── */
+    .feature {
+      background: var(--white);
+      border-bottom: 1.5px solid var(--ink);
+    }
+    .feature-inner {
+      max-width: 1280px; margin: 0 auto;
+      padding: 40px 32px;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 0;
+    }
+    .feature-left {
+      padding-right: 40px;
+      border-right: 1.5px solid var(--line);
+    }
+    .feature-right {
+      padding-left: 40px;
+      display: flex; flex-direction: column; justify-content: space-between;
+    }
+    .day-label {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: .72rem; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: var(--red); margin-bottom: 16px;
+    }
+    .day-label::before {
+      content: ''; display: block;
+      width: 20px; height: 2px; background: var(--red);
+    }
+    .feature-quote {
+      font-size: clamp(1.15rem, 2.2vw, 1.6rem);
+      font-weight: 400; line-height: 1.55;
+      color: var(--ink); letter-spacing: -.02em;
+      margin-bottom: 24px;
+    }
+    .feature-quote strong { font-weight: 700; }
+    .feature-meta {
+      display: flex; align-items: center; gap: 10px;
+    }
+    .f-chip {
+      font-size: .72rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: .07em;
+      color: var(--ink2); border: 1.5px solid var(--line2);
+      padding: 4px 10px; border-radius: 4px;
+    }
+    .f-copy {
+      height: 30px; padding: 0 14px;
+      border: 1.5px solid var(--red);
+      background: var(--red-bg); color: var(--red);
+      font-family: var(--f); font-size: .75rem; font-weight: 700;
+      border-radius: 4px; cursor: pointer;
+      display: flex; align-items: center; gap: 6px;
+      transition: background .15s, color .15s;
+    }
+    .f-copy:hover { background: var(--red); color: #fff; }
+
+    .stats-row {
+      display: flex; gap: 0;
+    }
+    .stat-item {
+      flex: 1;
+      padding: 20px 24px;
+      border: 1.5px solid var(--line);
+      border-radius: var(--r-sm);
+      background: var(--bg);
+    }
+    .stat-item + .stat-item { margin-left: 12px; }
+    .stat-n { font-size: 2.2rem; font-weight: 800; letter-spacing: -.04em; color: var(--ink); line-height: 1; }
+    .stat-l { font-size: .75rem; color: var(--ink3); font-weight: 500; text-transform: uppercase; letter-spacing: .07em; margin-top: 6px; }
+    .feature-tagline {
+      font-size: .9rem; color: var(--ink2); line-height: 1.6;
+      font-weight: 400; font-style: italic;
+      border-left: 3px solid var(--red);
+      padding-left: 16px; margin-top: 20px;
+    }
+
+    /* ── TABS ─────────────────────────────────────────────────── */
+    .tabs-bar {
+      background: var(--white);
+      border-bottom: 1.5px solid var(--line);
+      position: sticky; top: 56px; z-index: 90;
+    }
+    .tabs-inner {
+      max-width: 1280px; margin: 0 auto;
+      padding: 0 32px;
+      display: flex; gap: 0;
+      overflow-x: auto; scrollbar-width: none;
+    }
+    .tabs-inner::-webkit-scrollbar { display: none; }
+    .tab {
+      display: flex; align-items: center; gap: 8px;
+      padding: 0 18px; height: 48px;
+      border: none; background: none;
+      font-family: var(--f); font-size: .83rem; font-weight: 500;
+      color: var(--ink3); cursor: pointer;
+      white-space: nowrap; flex-shrink: 0;
+      border-bottom: 2.5px solid transparent;
+      margin-bottom: -1.5px;
+      transition: color .15s, border-color .15s;
+    }
+    .tab i { font-size: .72rem; }
+    .tab:hover { color: var(--ink2); }
+    .tab.active {
+      color: var(--ink);
+      border-bottom-color: var(--red);
+      font-weight: 700;
+    }
+
+    /* ── CONTENT ──────────────────────────────────────────────── */
+    .content {
+      max-width: 1280px; margin: 0 auto;
+      padding: 32px 32px 64px;
+    }
+    .content-head {
+      display: flex; align-items: baseline; justify-content: space-between;
+      margin-bottom: 24px; gap: 16px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--line);
+    }
+    .content-head h2 {
+      font-size: 1.4rem; font-weight: 800;
+      letter-spacing: -.04em; color: var(--ink);
+    }
+    .content-head span { font-size: .8rem; color: var(--ink3); font-weight: 400; }
+
+    /* ── GRID ─────────────────────────────────────────────────── */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border: 1.5px solid var(--line);
+      border-radius: var(--r);
+      overflow: hidden;
+    }
+    .card {
+      background: var(--white);
+      padding: 28px;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      display: flex; flex-direction: column; gap: 20px;
+      transition: background .2s var(--ease);
+      animation: up .35s var(--ease) both;
+      cursor: default;
+      position: relative;
+    }
+    /* Remove double borders on right/bottom edges */
+    .card:nth-child(3n) { border-right: none; }
+    .card:nth-last-child(-n+3):nth-child(3n+1),
+    .card:nth-last-child(-n+3):nth-child(3n+2),
+    .card:nth-last-child(-n+3):nth-child(3n),
+    .card:last-child,
+    .card:nth-last-child(2),
+    .card:nth-last-child(3) { border-bottom: none; }
+
+    .card:hover { background: var(--bg); }
+    .card:hover .card-num { color: var(--red); }
+
+    .card-num {
+      font-size: .7rem; font-weight: 800;
+      color: var(--ink3); letter-spacing: .08em;
+      text-transform: uppercase;
+      transition: color .2s;
+      font-feature-settings: "tnum";
+    }
+    .card-quote {
+      font-size: .975rem; font-weight: 400;
+      line-height: 1.7; color: var(--ink);
+      letter-spacing: -.01em; flex: 1;
+    }
+    .card-foot {
+      display: flex; align-items: center; justify-content: space-between; gap: 8px;
+    }
+    .card-tag {
+      font-size: .7rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .07em;
+      color: var(--ink3);
+    }
+    .card-btns { display: flex; gap: 6px; }
+    .cbtn {
+      width: 28px; height: 28px;
+      border-radius: var(--r-sm);
+      border: 1.5px solid var(--line);
+      background: var(--bg);
+      color: var(--ink3); font-size: .68rem;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: border-color .15s, color .15s, background .15s;
+    }
+    .cbtn:hover { border-color: var(--red); color: var(--red); background: var(--red-bg); }
+    .cbtn:active { transform: scale(.9); }
+
+    @keyframes up { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:none; } }
+    .card:nth-child(1){animation-delay:0ms}
+    .card:nth-child(2){animation-delay:50ms}
+    .card:nth-child(3){animation-delay:100ms}
+    .card:nth-child(4){animation-delay:150ms}
+    .card:nth-child(5){animation-delay:200ms}
+    .card:nth-child(6){animation-delay:250ms}
+
+    /* ── EMPTY ────────────────────────────────────────────────── */
+    .empty {
+      background: var(--white); border: 1.5px solid var(--line);
+      border-radius: var(--r);
+      padding: 80px 24px; text-align: center;
+    }
+    .empty-ic { font-size: 1.5rem; color: var(--ink3); margin-bottom: 14px; }
+    .empty h3 { font-size: 1rem; font-weight: 700; color: var(--ink2); margin-bottom: 6px; }
+    .empty p { font-size: .83rem; color: var(--ink3); }
+
+    /* ── PAGINATION ───────────────────────────────────────────── */
+    .pager {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: 28px; padding-top: 20px;
+      border-top: 1px solid var(--line);
+      gap: 12px;
+    }
+    .pbtn {
+      height: 36px; padding: 0 18px;
+      border: 1.5px solid var(--line2);
+      border-radius: var(--r-sm);
+      background: var(--white); color: var(--ink2);
+      font-family: var(--f); font-size: .82rem; font-weight: 600;
+      cursor: pointer; display: flex; align-items: center; gap: 8px;
+      transition: border-color .15s, color .15s;
+    }
+    .pbtn:hover:not(:disabled) { border-color: var(--ink); color: var(--ink); }
+    .pbtn:disabled { opacity: .3; cursor: not-allowed; }
+    .pinfo { font-size: .82rem; color: var(--ink3); font-weight: 500; }
+
+    /* ── TOAST ────────────────────────────────────────────────── */
+    .toast {
+      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(16px);
+      background: var(--ink); color: var(--bg);
+      padding: 11px 20px; border-radius: var(--r-sm);
+      font-size: .83rem; font-weight: 600;
+      display: flex; align-items: center; gap: 9px;
+      opacity: 0; transition: opacity .25s, transform .25s var(--ease);
+      pointer-events: none; z-index: 9999; white-space: nowrap;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+    .toast-dot { width: 6px; height: 6px; border-radius: 50%; background: #4ADE80; flex-shrink: 0; }
+
+    /* ── RESPONSIVE ───────────────────────────────────────────── */
+    @media (max-width: 1024px) {
+      .grid { grid-template-columns: repeat(2, 1fr); }
+      .card:nth-child(3n) { border-right: 1px solid var(--line); }
+      .card:nth-child(2n) { border-right: none; }
+    }
+    @media (max-width: 768px) {
+      .nav-inner { padding: 0 16px; }
+      .feature-inner { grid-template-columns: 1fr; }
+      .feature-left { border-right: none; padding-right: 0; border-bottom: 1.5px solid var(--line); padding-bottom: 28px; margin-bottom: 0; }
+      .feature-right { padding-left: 0; padding-top: 24px; }
+      .tabs-inner, .content { padding-left: 16px; padding-right: 16px; }
+      .content { padding-top: 20px; }
+    }
+    @media (max-width: 600px) {
+      .grid { grid-template-columns: 1fr; }
+      .card:nth-child(2n) { border-right: 1px solid var(--line); }
+      .card:nth-child(n) { border-right: none; }
+    }
+    @media (max-width: 480px) {
+      .pbtn span { display: none; }
+      .search-field { max-width: 160px; }
+      .wordmark { font-size: .95rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <div class="wordmark">Quote<em>s</em></div>
+      <div class="nav-divider"></div>
+      <div class="search-field">
+        <i class="fas fa-search"></i>
+        <input type="text" id="searchInput" placeholder="Search…" autocomplete="off">
+        <button id="searchClear"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="nav-right">
+        <button class="nbtn sq" id="themeToggle" aria-label="Toggle theme">
+          <i class="fas fa-moon" id="iMoon"></i>
+          <i class="fas fa-sun" id="iSun" style="display:none"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- FEATURE STRIP -->
+  <section class="feature">
+    <div class="feature-inner">
+      <div class="feature-left">
+        <div class="day-label">Quote of the Day</div>
+        <p class="feature-quote" id="dailyQuoteText">Loading…</p>
+        <div class="feature-meta">
+          <span class="f-chip" id="dailyQuoteCat">—</span>
+          <button class="f-copy" id="heroCopy"><i class="fas fa-copy"></i> Copy</button>
+        </div>
+      </div>
+      <div class="feature-right">
+        <div class="stats-row">
+          <div class="stat-item">
+            <div class="stat-n" id="totalQuotes">—</div>
+            <div class="stat-l">Total Quotes</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-n" id="totalCats">—</div>
+            <div class="stat-l">Categories</div>
+          </div>
+        </div>
+        <p class="feature-tagline">A curated collection of words that move, challenge, and inspire.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TABS -->
+  <div class="tabs-bar">
+    <div class="tabs-inner" id="tabsInner"></div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+    <div class="content-head">
+      <h2 id="catTitle">—</h2>
+      <span id="counter">—</span>
+    </div>
+    <div id="quotesGrid"></div>
+    <div class="pager">
+      <button class="pbtn" id="prevPage">
+        <i class="fas fa-arrow-left"></i><span>Previous</span>
+      </button>
+      <span class="pinfo" id="pageInfo"></span>
+      <button class="pbtn" id="nextPage">
+        <span>Next</span><i class="fas fa-arrow-right"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast">
+    <span class="toast-dot"></span>
+    <span id="toastMsg">Copied!</span>
+  </div>
+
+  <script>
+    const DATA = {
+      motivational: {
+        name: "Motivational", icon: "fas fa-bolt",
+        quotes: [
+          "Success is not final, failure is not fatal: It is the courage to continue that counts.",
+          "The only way to do great work is to love what you do.",
+          "Your time is limited, don't waste it living someone else's life.",
+          "The future belongs to those who believe in the beauty of their dreams.",
+          "It does not matter how slowly you go as long as you do not stop.",
+          "Don't watch the clock; do what it does. Keep going.",
+          "Believe you can and you're halfway there.",
+          "The only limit to our realization of tomorrow will be our doubts of today."
+        ]
+      },
+      love: {
+        name: "Love & Romance", icon: "fas fa-heart",
+        quotes: [
+          "I have waited for this opportunity for more than half a century, to repeat to you once again my vow of eternal fidelity and everlasting love.",
+          "The best thing to hold onto in life is each other.",
+          "You don't love someone for their looks, or their clothes, or for their fancy car, but because they sing a song only you can hear.",
+          "Love is composed of a single soul inhabiting two bodies.",
+          "The greatest happiness of life is the conviction that we are loved; loved for ourselves, or rather, loved in spite of ourselves.",
+          "To love and be loved is to feel the sun from both sides."
+        ]
+      },
+      flirty: {
+        name: "Flirty", icon: "fas fa-fire",
+        quotes: [
+          "Are you a magician? Because whenever I look at you, everyone else disappears.",
+          "Do you have a map? I keep getting lost in your eyes.",
+          "If you were a vegetable, you'd be a cute-cumber.",
+          "Is your name Google? Because you have everything I've been searching for.",
+          "Do you believe in love at first sight, or should I walk by again?",
+          "If I could rearrange the alphabet, I'd put U and I together."
+        ]
+      },
+      stoicism: {
+        name: "Stoicism", icon: "fas fa-brain",
+        quotes: [
+          "The happiness of your life depends upon the quality of your thoughts.",
+          "We suffer more often in imagination than in reality.",
+          "You have power over your mind - not outside events. Realize this, and you will find strength.",
+          "He who fears death will never do anything worth of a man who is alive.",
+          "The key is to keep company only with people who uplift you, whose presence calls forth your best.",
+          "It's not what happens to you, but how you react to it that matters."
+        ]
+      },
+      trust: {
+        name: "Trust & Betrayal", icon: "fas fa-user-shield",
+        quotes: [
+          "The saddest thing about betrayal is that it never comes from your enemies.",
+          "Trust takes years to build, seconds to break, and forever to repair.",
+          "When someone shows you who they are, believe them the first time.",
+          "The worst kind of hurt is betrayal, because it means someone was willing to hurt you just to make themselves feel better.",
+          "It's better to be alone than to be with someone who makes you feel alone.",
+          "Not everyone you lose is a loss."
+        ]
+      },
+      "mental-health": {
+        name: "Mental Health", icon: "fas fa-leaf",
+        quotes: [
+          "Your mental health is a priority. Your happiness is essential. Your self-care is a necessity.",
+          "It's okay to not be okay. Just don't give up.",
+          "Healing is not linear. It's okay to have bad days.",
+          "You don't have to be positive all the time. It's perfectly okay to feel sad, angry, annoyed, frustrated, scared and anxious. Having feelings doesn't make you a negative person. It makes you human.",
+          "Self-care is how you take your power back.",
+          "Your current situation is not your final destination."
+        ]
+      },
+      wisdom: {
+        name: "Life Wisdom", icon: "fas fa-lightbulb",
+        quotes: [
+          "The two most important days in your life are the day you are born and the day you find out why.",
+          "Life is 10% what happens to you and 90% how you react to it.",
+          "In the end, we only regret the chances we didn't take.",
+          "The only way to do great work is to love what you do.",
+          "If you want to lift yourself up, lift up someone else.",
+          "The purpose of our lives is to be happy."
+        ]
+      },
+      "self-reflection": {
+        name: "Self-Reflection", icon: "fas fa-eye",
+        quotes: [
+          "Knowing yourself is the beginning of all wisdom.",
+          "The unexamined life is not worth living.",
+          "Your task is not to seek for love, but merely to seek and find all the barriers within yourself that you have built against it.",
+          "Who looks outside, dreams; who looks inside, awakes.",
+          "The most difficult thing in life is to know yourself.",
+          "We do not learn from experience... we learn from reflecting on experience."
+        ]
+      },
+      religion: {
+        name: "Spirituality", icon: "fas fa-sun",
+        quotes: [
+          "Faith is taking the first step even when you don't see the whole staircase.",
+          "The soul always knows what to do to heal itself. The challenge is to silence the mind.",
+          "Prayer is not asking. It is a longing of the soul.",
+          "The best and most beautiful things in the world cannot be seen or even touched - they must be felt with the heart.",
+          "God does not require us to be successful, only faithful.",
+          "We are not human beings having a spiritual experience. We are spiritual beings having a human experience."
+        ]
+      },
+      "dark-humor": {
+        name: "Dark Humor", icon: "fas fa-masks-theater",
+        quotes: [
+          "I'm not arguing, I'm just explaining why I'm right.",
+          "My bed is a magical place where I suddenly remember everything I was supposed to do.",
+          "I don't have a bad handwriting, I have my own font.",
+          "I'm not lazy, I'm on energy saving mode.",
+          "My brain has too many tabs open.",
+          "I'm not procrastinating, I'm doing side quests."
+        ]
+      },
+      war: {
+        name: "War & Politics", icon: "fas fa-globe",
+        quotes: [
+          "In war, truth is the first casualty.",
+          "The supreme art of war is to subdue the enemy without fighting.",
+          "Politics is war without bloodshed while war is politics with bloodshed.",
+          "War does not determine who is right - only who is left.",
+          "The first casualty when war comes is truth.",
+          "Older men declare war. But it is youth that must fight and die."
+        ]
+      },
+      time: {
+        name: "Time & Change", icon: "fas fa-hourglass",
+        quotes: [
+          "The trouble is, you think you have time.",
+          "Time you enjoy wasting is not wasted time.",
+          "Change is the only constant in life.",
+          "The way I see it, if you want the rainbow, you gotta put up with the rain.",
+          "Time is what we want most, but what we use worst.",
+          "The only time you should ever look back is to see how far you've come."
+        ]
+      },
+      cultural: {
+        name: "Proverbs", icon: "fas fa-earth-americas",
+        quotes: [
+          "Fall seven times, stand up eight. — Japanese Proverb",
+          "If you want to go fast, go alone. If you want to go far, go together. — African Proverb",
+          "A bird does not sing because it has an answer. It sings because it has a song. — Chinese Proverb",
+          "He who does not travel will not know the value of men. — Moorish Proverb",
+          "A smooth sea never made a skilled sailor. — English Proverb",
+          "After the game, the king and the pawn go into the same box. — Italian Proverb"
+        ]
+      },
+      character: {
+        name: "Character", icon: "fas fa-award",
+        quotes: [
+          "Character is how you treat those who can do nothing for you.",
+          "Our character is what we do when we think no one is looking.",
+          "The measure of a man's real character is what he would do if he knew he would never be found out.",
+          "Character cannot be developed in ease and quiet. Only through experience of trial and suffering can the soul be strengthened, vision cleared, ambition inspired, and success achieved.",
+          "Watch your thoughts, they become your words; watch your words, they become your actions; watch your actions, they become your habits; watch your habits, they become your character; watch your character, it becomes your destiny.",
+          "Reputation is what others think of us; character is what God knows of us."
+        ]
+      }
+    };
+
+    /* state */
+    let cat = 'motivational', page = 1, filtered = [];
+    const PER = 6;
+
+    /* dom */
+    const $tabs   = document.getElementById('tabsInner');
+    const $grid   = document.getElementById('quotesGrid');
+    const $title  = document.getElementById('catTitle');
+    const $ctr    = document.getElementById('counter');
+    const $prev   = document.getElementById('prevPage');
+    const $next   = document.getElementById('nextPage');
+    const $pinfo  = document.getElementById('pageInfo');
+    const $srch   = document.getElementById('searchInput');
+    const $clr    = document.getElementById('searchClear');
+    const $toast  = document.getElementById('toast');
+    const $tmsg   = document.getElementById('toastMsg');
+    const $theme  = document.getElementById('themeToggle');
+    const $dq     = document.getElementById('dailyQuoteText');
+    const $dcat   = document.getElementById('dailyQuoteCat');
+    const $hcopy  = document.getElementById('heroCopy');
+
+    function init() {
+      setTheme(localStorage.getItem('theme') || 'light');
+      buildTabs();
+      setDailyQuote();
+      setStats();
+      render();
+      bind();
+    }
+
+    function setTheme(t) {
+      document.documentElement.setAttribute('data-theme', t);
+      document.getElementById('iMoon').style.display = t === 'dark' ? 'none' : 'block';
+      document.getElementById('iSun').style.display  = t === 'dark' ? 'block' : 'none';
+      localStorage.setItem('theme', t);
+    }
+
+    function setStats() {
+      let n = 0;
+      Object.values(DATA).forEach(c => n += c.quotes.length);
+      document.getElementById('totalQuotes').textContent = n;
+      document.getElementById('totalCats').textContent = Object.keys(DATA).length;
+    }
+
+    let dailyText = '';
+    function setDailyQuote() {
+      const all = [];
+      Object.values(DATA).forEach(c => c.quotes.forEach(q => all.push({ text: q, cat: c.name })));
+      const d = new Date();
+      const i = (d.getFullYear() * 10000 + (d.getMonth()+1)*100 + d.getDate()) % all.length;
+      dailyText = all[i].text;
+      $dq.textContent   = dailyText;
+      $dcat.textContent = all[i].cat;
+    }
+
+    function buildTabs() {
+      $tabs.innerHTML = '';
+      Object.entries(DATA).forEach(([key, c]) => {
+        const b = document.createElement('button');
+        b.className = `tab${key === cat ? ' active' : ''}`;
+        b.dataset.key = key;
+        b.innerHTML = `<i class="${c.icon}"></i>${c.name}`;
+        b.addEventListener('click', () => {
+          cat = key; page = 1;
+          $tabs.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.key === key));
+          b.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+          render();
+        });
+        $tabs.appendChild(b);
+      });
+    }
+
+    function render() {
+      const c  = DATA[cat];
+      const q  = $srch.value.trim().toLowerCase();
+      filtered = q ? c.quotes.filter(s => s.toLowerCase().includes(q)) : [...c.quotes];
+
+      const total = Math.ceil(filtered.length / PER) || 1;
+      if (page > total) page = total;
+      const s = (page-1)*PER, e = Math.min(s+PER, filtered.length);
+      const slice = filtered.slice(s, e);
+
+      $title.textContent = c.name;
+      $ctr.textContent   = filtered.length ? `${s+1}–${e} of ${filtered.length} quotes` : '';
+      $pinfo.textContent = total > 1 ? `Page ${page} of ${total}` : '';
+      $prev.disabled = page === 1;
+      $next.disabled = page >= total;
+
+      $grid.innerHTML = '';
+
+      if (!slice.length) {
+        $grid.innerHTML = `<div class="empty">
+          <div class="empty-ic"><i class="fas fa-search"></i></div>
+          <h3>No results found</h3>
+          <p>Try different keywords or pick another category.</p>
+        </div>`;
+        return;
+      }
+
+      const g = document.createElement('div');
+      g.className = 'grid';
+      slice.forEach((quote, idx) => {
+        const d = document.createElement('div');
+        d.className = 'card';
+        d.innerHTML = `
+          <div class="card-num">No. ${String(s + idx + 1).padStart(2,'0')}</div>
+          <p class="card-quote">${quote}</p>
+          <div class="card-foot">
+            <span class="card-tag">${c.name}</span>
+            <div class="card-btns">
+              <button class="cbtn copy-btn" title="Copy"><i class="fas fa-copy"></i></button>
+              <button class="cbtn share-btn" title="Share"><i class="fas fa-share-nodes"></i></button>
+            </div>
+          </div>`;
+        d.querySelector('.copy-btn').onclick  = () => copy(quote, 'Copied to clipboard');
+        d.querySelector('.share-btn').onclick = () => {
+          if (navigator.share) navigator.share({ title: c.name, text: quote, url: location.href });
+          else copy(quote, 'Copied — share manually!');
+        };
+        g.appendChild(d);
+      });
+      $grid.appendChild(g);
+    }
+
+    let tt;
+    function copy(text, msg) {
+      navigator.clipboard.writeText(text).then(() => {
+        $tmsg.textContent = msg;
+        $toast.classList.add('show');
+        clearTimeout(tt);
+        tt = setTimeout(() => $toast.classList.remove('show'), 3000);
+      });
+    }
+
+    function bind() {
+      $prev.onclick = () => { if(page>1){ page--; render(); scrollTo({top:0,behavior:'smooth'}); }};
+      $next.onclick = () => {
+        if(page < Math.ceil(filtered.length/PER)){ page++; render(); scrollTo({top:0,behavior:'smooth'}); }
+      };
+      $srch.addEventListener('input', () => { page=1; render(); });
+      $clr.onclick = () => { $srch.value=''; page=1; render(); };
+      $theme.onclick = () => {
+        const t = document.documentElement.getAttribute('data-theme');
+        setTheme(t === 'dark' ? 'light' : 'dark');
+      };
+      $hcopy.onclick = () => copy(dailyText, 'Quote of the Day copied!');
+      document.addEventListener('keydown', e => {
+        if (e.target.tagName === 'INPUT') return;
+        if (e.key === 'ArrowLeft')  $prev.click();
+        if (e.key === 'ArrowRight') $next.click();
+      });
+    }
+
+    init();
+  </script>
+</body>
+</html>
